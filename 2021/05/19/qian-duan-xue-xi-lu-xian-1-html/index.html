@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
 </head>
 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.8k
                 </div>
                 
 
@@ -551,6 +551,57 @@ This is a paragraph
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Milk<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ol</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="div和span"><a href="#div和span" class="headerlink" title="div和span"></a>div和span</h3><p>这两个元素可用于分块，其实没有什么特别的含义。</p>
+<p><code>&lt;div&gt;</code>属于块级元素，浏览器会在其前后显示折行，如果与 CSS 一同使用，<code>&lt;div&gt;</code> 元素可用于对大的内容块设置样式属性。</p>
+<p> <code>&lt;span&gt;</code> 元素是内联元素，可用作文本的容器，当与 CSS 一同使用时，<span> 元素可用于为部分文本设置样式属性。 </span></p>
+<h3 id="HTML类"><a href="#HTML类" class="headerlink" title="HTML类"></a>HTML类</h3><p>可以在HTML文本中定义类，在元素中可以使用类。</p>
+<p>下面给出一个使用示例：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style"><span class="token language-css">
+<span class="token selector">.cities</span> <span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span>black<span class="token punctuation">;</span>
+    <span class="token property">color</span><span class="token punctuation">:</span>white<span class="token punctuation">;</span>
+    <span class="token property">margin</span><span class="token punctuation">:</span>20px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span>20px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cities<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>London<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>
+London is the capital city of England. 
+It is the most populous city in the United Kingdom, 
+with a metropolitan area of over 13 million inhabitants.
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span> 
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="HTML-id"><a href="#HTML-id" class="headerlink" title="HTML id"></a>HTML id</h3><p>用于为元素指定唯一的id，定义id的方法和类类似，但是把<code>.</code>替换为<code>#</code>。</p>
+<p>在使用时，类是<code>class="xxx"</code>，id是<code>id="xxx"</code>。</p>
+<p>类和id的<strong>不同点</strong>在于， 同一个类名可以由多个 HTML 元素使用，而一个 id 名称只能由页面中的一个 HTML 元素使用 。</p>
+<p>还可以使用id和href实现文章内跳转，详见<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/html/html_id.asp">HTML id 属性</a> 。</p>
+<h3 id="HTML-JavaScript"><a href="#HTML-JavaScript" class="headerlink" title="HTML JavaScript"></a>HTML JavaScript</h3><p>简单来说就是一种脚本罢了，可以实现交互和动态效果， 见用途是图像处理、表单验证和内容的动态更改。 </p>
+<p>JS可以更改样式、内容和属性值。</p>
+<p>更多内容等学习了JS再说吧。</p>
+<h3 id="语义"><a href="#语义" class="headerlink" title="语义"></a>语义</h3><p>语义是一个比较宽泛的概念，简单来说就是数据或者词语的意义，也就是说，数据放在不同环境下会产生出不同的意义，那么在计算机的自然语言处理领域也蕴含着对语义的研究，在HTML里，语义可以理解为对于浏览器来说，它是可以传达其内容明确的含义的标签。</p>
+<p>比如说，<code>&lt;div&gt; &lt;span&gt;</code>不能算是语义元素，因为我们不能根据标签理解其内容的明确含义，而 <code>&lt;form&gt; &lt;table&gt; &lt;img&gt;</code>则明确传递了某种含义，如这是一个表单、一个表格、一张图片，通过这些标签就可以知道这里面的东西是什么</p>
+<h3 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h3><p>列出一些HTML代码的常见规范：</p>
+<ul>
+<li>始终在文档的首行添加 <code>!DOCTYPE html</code></li>
+<li>元素名尽量用小写</li>
+<li>建议将所有的HTML元素关闭</li>
+<li><strong>使用两个空格代替TAB键</strong></li>
+</ul>
+<p>其他要点随着写代码不断掌握。</p>
+<h3 id="字符实体"><a href="#字符实体" class="headerlink" title="字符实体"></a>字符实体</h3><p>HTML中的预留字符必须要使用实体来表示，或者键盘上不存在的符号以及Emoji表情，都能用实体来表示，比如&gt; &lt; &amp;  ∂ 等，有对应的实体名称，需要使用时查表即可。</p>
+<h3 id="XHTML"><a href="#XHTML" class="headerlink" title="XHTML"></a>XHTML</h3><p>XHTML是以XML的形式编写的HTML，它相较HTML更纯净、更严格。</p>
 
                 
             </div>
@@ -1002,7 +1053,7 @@ This is a paragraph
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">1.1k</span>
+                        class="white-color">1.8k</span>
             
             
             
