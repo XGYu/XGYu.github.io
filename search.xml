@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>小程序开发入门(一)</title>
+      <link href="2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/"/>
+      <url>2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="文件组成"><a href="#文件组成" class="headerlink" title="文件组成"></a>文件组成</h3><p>在小程序开发的过程中，主要与四种文件类型接触：JSON、WXML、WXSS、JS。</p><p>其中JSON文件负责静态配置，可以全局或局部定义小程序的外观或页面路径等内容。</p><p>WXML有点类似HTML，区别主要在于它封装了HTML的一些标签，在写页面的时候可以更加方便，此外，在WXML中还可以增加条件判断和数据绑定。</p><p>WXSS负责样式，等待后续继续学习。</p><p>JS负责逻辑交互，比如如何获取用户点击，如何获取用户的位置等等，我们需要获取这些行为，并对这些行为做一些逻辑响应。通过JS提供的一些借口，可以方便调用微信内置的一些功能模块，如获取用户信息、本地存储、微信支付等模块内容。</p><h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>简要讲述一下小程序的层次结构。整个小程序的系统框架分为<strong>视图层</strong>和<strong>逻辑层</strong>，视图层依赖于试图描述语言WXML和WXSS，而逻辑层由JavaScript脚本语言控制，具体的层次结构如下图所示。</p><p><img src="https://res.wx.qq.com/wxdoc/dist/assets/img/4-1.ad156d1c.png" alt="img"></p><p>小程序提供了许多组件和API，后续再继续学习。</p><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>小程序的根目录下面有三个主体文件：</p><ul><li><code>app.js</code>：负责小程序逻辑</li><li><code>app.json</code>：小程序的公共配置</li><li><code>app.wxss</code>：不是必需的，负责控制小程序的公共样式表</li></ul><p>对于一个小程序页面(page)，通常有四个文件：</p><ul><li><code>js</code>：负责页面逻辑</li><li><code>wxml</code>：负责页面结构</li><li><code>json</code>：不是必需的，负责页面的静态配置</li><li><code>wxss</code>：不是必须的，负责页面样式</li></ul><p>为了减少配置，这四个文件的文件名，要和页面名称相同。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>前端学习路线(1)-HTML</title>
       <link href="2021/05/19/qian-duan-xue-xi-lu-xian-1-html/"/>
       <url>2021/05/19/qian-duan-xue-xi-lu-xian-1-html/</url>
