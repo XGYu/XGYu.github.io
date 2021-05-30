@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小程序开发入门(一), XGYu">
+    <meta name="keywords" content="小程序开发入门(1), XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小程序开发入门(一) | XGYu</title>
+    <title>小程序开发入门(1) | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 5.4.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
 </head>
 
 
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小程序开发入门(一)</h1>
+                    <h1 class="description center-align post-title">小程序开发入门(1)</h1>
                 </div>
             </div>
         </div>
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    461
+                    668
                 </div>
                 
 
@@ -493,10 +493,32 @@
 <ul>
 <li><code>js</code>：负责页面逻辑</li>
 <li><code>wxml</code>：负责页面结构</li>
-<li><code>json</code>：不是必需的，负责页面的静态配置</li>
+<li><code>json</code>：不是必需的，负责页面的静态配置。如果在页面<code>json</code>下配置了相关内容，则会覆盖掉根目录下的相同配置项</li>
 <li><code>wxss</code>：不是必须的，负责页面样式</li>
 </ul>
 <p>为了减少配置，这四个文件的文件名，要和页面名称相同。</p>
+<p>总体来说，文件目录结构如下所示：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">├── app.js
+├── app.json
+├── app.wxss
+├── pages
+│   │── index
+│   │   ├── index.wxml
+│   │   ├── index.js
+│   │   ├── index.json
+│   │   └── index.wxss
+│   └── logs
+│       ├── logs.wxml
+│       └── logs.js
+└── utils<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这表明小程序有两个页面：index和logs。</p>
+<h3 id="注册小程序"><a href="#注册小程序" class="headerlink" title="注册小程序"></a>注册小程序</h3><p> 每个小程序都需要在 <code>app.js</code> 中调用 <code>App</code> 方法注册小程序实例，绑定生命周期回调函数、错误监听和页面不存在监听函数等。 </p>
+<p> 整个小程序只有一个 App 实例，是全部页面共享的。开发者可以通过 <code>getApp</code> 方法获取到全局唯一的 App 实例，获取App上的数据或调用开发者注册在 <code>App</code> 上的函数。 </p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// xxx.js</span>
+<span class="token keyword">const</span> appInstance <span class="token operator">=</span> <span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>appInstance<span class="token punctuation">.</span>globalData<span class="token punctuation">)</span> <span class="token comment">// I am global data</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -730,18 +752,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/">
+                <a href="/2021/05/30/qian-duan-xue-xi-lu-xian-2-css/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="小程序开发入门(一)">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="前端学习路线(2)-CSS">
                         
-                        <span class="card-title">小程序开发入门(一)</span>
+                        <span class="card-title">前端学习路线(2)-CSS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -751,9 +772,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-29
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -762,7 +783,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -947,7 +967,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">2.3k</span>
+                        class="white-color">2.5k</span>
             
             
             
