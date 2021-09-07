@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小程序开发入门(1), XGYu">
+    <meta name="keywords" content="Golang笔记(1), XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小程序开发入门(1) | XGYu</title>
+    <title>Golang笔记(1) | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小程序开发入门(1)</h1>
+                    <h1 class="description center-align post-title">Golang笔记(1)</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-29
+                    2021-09-07
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    668
+                    230
                 </div>
                 
 
@@ -475,49 +475,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="文件组成"><a href="#文件组成" class="headerlink" title="文件组成"></a>文件组成</h3><p>在小程序开发的过程中，主要与四种文件类型接触：JSON、WXML、WXSS、JS。</p>
-<p>其中JSON文件负责静态配置，可以全局或局部定义小程序的外观或页面路径等内容。</p>
-<p>WXML有点类似HTML，区别主要在于它封装了HTML的一些标签，在写页面的时候可以更加方便，此外，在WXML中还可以增加条件判断和数据绑定。</p>
-<p>WXSS负责样式，等待后续继续学习。</p>
-<p>JS负责逻辑交互，比如如何获取用户点击，如何获取用户的位置等等，我们需要获取这些行为，并对这些行为做一些逻辑响应。通过JS提供的一些借口，可以方便调用微信内置的一些功能模块，如获取用户信息、本地存储、微信支付等模块内容。</p>
-<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>简要讲述一下小程序的层次结构。整个小程序的系统框架分为<strong>视图层</strong>和<strong>逻辑层</strong>，视图层依赖于试图描述语言WXML和WXSS，而逻辑层由JavaScript脚本语言控制，具体的层次结构如下图所示。</p>
-<p><img src="https://res.wx.qq.com/wxdoc/dist/assets/img/4-1.ad156d1c.png" alt="img"></p>
-<p>小程序提供了许多组件和API，后续再继续学习。</p>
-<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>小程序的根目录下面有三个主体文件：</p>
-<ul>
-<li><code>app.js</code>：负责小程序逻辑</li>
-<li><code>app.json</code>：小程序的公共配置</li>
-<li><code>app.wxss</code>：不是必需的，负责控制小程序的公共样式表</li>
-</ul>
-<p>对于一个小程序页面(page)，通常有四个文件：</p>
-<ul>
-<li><code>js</code>：负责页面逻辑</li>
-<li><code>wxml</code>：负责页面结构</li>
-<li><code>json</code>：不是必需的，负责页面的静态配置。如果在页面<code>json</code>下配置了相关内容，则会覆盖掉根目录下的相同配置项</li>
-<li><code>wxss</code>：不是必须的，负责页面样式</li>
-</ul>
-<p>为了减少配置，这四个文件的文件名，要和页面名称相同。</p>
-<p>总体来说，文件目录结构如下所示：</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">├── app.js
-├── app.json
-├── app.wxss
-├── pages
-│   │── index
-│   │   ├── index.wxml
-│   │   ├── index.js
-│   │   ├── index.json
-│   │   └── index.wxss
-│   └── logs
-│       ├── logs.wxml
-│       └── logs.js
-└── utils<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>学习Go语言的主要目的是为了在明年暑假左右找到一份实习，目标是年前完成语言和框架的学习，年后开始刷题、学习网络、数据库等内容，加油！！！</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>在学习字符串的过程中，得益于Go语言类似于Python切片的特性，以及对<code>UTF-8</code>编码方式的支持，发现了一个非常精妙的解决字符串前缀和后缀问题的解决方法。具体的解决代码如下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//测试一个字符串是否是另一个字符串的前缀</span>
+<span class="token keyword">func</span> <span class="token function">HasPrefix</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> prefix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">==</span> prefix
+<span class="token punctuation">}</span>
 
-<p>这表明小程序有两个页面：index和logs。</p>
-<h3 id="注册小程序"><a href="#注册小程序" class="headerlink" title="注册小程序"></a>注册小程序</h3><p> 每个小程序都需要在 <code>app.js</code> 中调用 <code>App</code> 方法注册小程序实例，绑定生命周期回调函数、错误监听和页面不存在监听函数等。 </p>
-<p> 整个小程序只有一个 App 实例，是全部页面共享的。开发者可以通过 <code>getApp</code> 方法获取到全局唯一的 App 实例，获取App上的数据或调用开发者注册在 <code>App</code> 上的函数。 </p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// xxx.js</span>
-<span class="token keyword">const</span> appInstance <span class="token operator">=</span> <span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>appInstance<span class="token punctuation">.</span>globalData<span class="token punctuation">)</span> <span class="token comment">// I am global data</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">//后缀测试</span>
+<span class="token keyword">func</span> <span class="token function">HasSuffix</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> suffix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>suffix<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">len</span><span class="token punctuation">(</span>suffix<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">==</span> suffix
+<span class="token punctuation">}</span>
+
+<span class="token comment">//应用：包含子串测试</span>
+<span class="token keyword">func</span> <span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> substr <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> i <span class="token operator">++</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token function">HasPrefix</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> substr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -545,7 +523,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/">https://xgyu.github.io/2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/</a>
+                    <a href="https://xgyu.github.io/2021/09/07/golang-bi-ji-1/">https://xgyu.github.io/2021/09/07/golang-bi-ji-1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -752,54 +730,18 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/05/30/qian-duan-xue-xi-lu-xian-2-css-chu-ji/">
+                <a href="/2021/09/07/golang-bi-ji-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="前端学习路线(2)-CSS初级">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Golang笔记(1)">
                         
-                        <span class="card-title">前端学习路线(2)-CSS初级</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-30
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            YuXingguo
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/05/19/qian-duan-xue-xi-lu-xian-1-html/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="前端学习路线(1)-HTML">
-                        
-                        <span class="card-title">前端学习路线(1)-HTML</span>
+                        <span class="card-title">Golang笔记(1)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -810,7 +752,45 @@ console<span class="token punctuation">.</span><span class="token function">log<
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            YuXingguo
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/06/07/qian-duan-xue-xi-lu-xian-3-css-zhong-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="前端学习路线(3)-CSS中级">
+                        
+                        <span class="card-title">前端学习路线(3)-CSS中级</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
                             </span>
                         <span class="publish-author">
                             
