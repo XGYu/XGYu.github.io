@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    230
+                    402
                 </div>
                 
 
@@ -496,6 +496,17 @@
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>无论使用何种编程语言，对字符串的处理通常而言是最多的，所以一些常见的对字符串的处理方法要记住或者有印象，防止再去重复造轮子，那么在圣经一书中，给出了四个常用的处理字符串的包：<code>bytes、strings、strconv、unicode</code>，关于字符串的许多方法都可以在其中找到。</p>
+<p>下面的例子展示了为数值每隔三个字符加上逗号，如“12345”变为“12,345”：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//下面的这个方法仅适用于整数，不适用于浮点数</span>
+<span class="token keyword">func</span> <span class="token function">comma</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> s
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">','</span> <span class="token operator">+</span> s<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -947,7 +958,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.1k</span>
+                        class="white-color">5.3k</span>
             
             
             
