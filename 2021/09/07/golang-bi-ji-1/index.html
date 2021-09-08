@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
 </head>
 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    402
+                    889
                 </div>
                 
 
@@ -505,9 +505,87 @@
     <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>
         <span class="token keyword">return</span> s
     <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">','</span> <span class="token operator">+</span> s<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> s<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
 
+<span class="token comment">//习题3.10: 改为非递归版本</span>
+<span class="token keyword">func</span> <span class="token function">commaNonre</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> buf bytes<span class="token punctuation">.</span>Buffer
+    i <span class="token operator">:=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> n <span class="token operator">&gt;</span> <span class="token number">3</span><span class="token punctuation">;</span> n<span class="token punctuation">,</span> i <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">3</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> n <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+            i <span class="token operator">=</span> n <span class="token operator">%</span> <span class="token number">3</span>
+            buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span><span class="token punctuation">{</span>
+            buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//习题3.11: 支持浮点数及增加对正负号的处理</span>
+<span class="token keyword">func</span> <span class="token function">commaDecimal</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> s
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> <span class="token function">commaDecimal</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">prefectComma</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> buf bytes<span class="token punctuation">.</span>Buffer
+    <span class="token keyword">if</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"+"</span><span class="token punctuation">)</span> <span class="token operator">||</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"-"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        s <span class="token operator">=</span> s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        i <span class="token operator">:=</span> strings<span class="token punctuation">.</span><span class="token function">Index</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">)</span>
+        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"."</span><span class="token punctuation">)</span>
+        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">commaDecimal</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>值得注意的地方是，字符串是只读的，而slice元素则可以被自由更改。</p>
+<p>学习字符串时，遇到了这样一道习题：</p>
+<blockquote>
+<p> 编写一个函数，判断两个字符串是否是相互打乱的，也就是说它们有着相同的字符，但是对应不同的顺序。 </p>
+</blockquote>
+<p>那么这个问题使用<code>map</code>是很好解决的，但是自己在学习其他语言的时候又没有很好地使用过这个数据结构，所以现在先简单的学习一下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//创建一个映射，键的类型为string，值的类型为int，有两种初始化方法</span>
+<span class="token comment">//下面的代码为第1种初始化方法，此时创建了一个空的map</span>
+dict <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+<span class="token comment">//下面的代码为第2种初始化方法，这与上面的代码是等价的</span>
+dict <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token comment">//测试map中的key值是否存在</span>
+<span class="token comment">//1.同时取value及一个表示key是否存在的bool型标志</span>
+value<span class="token punctuation">,</span> exists <span class="token operator">:=</span> dict<span class="token punctuation">[</span><span class="token string">"Blue"</span><span class="token punctuation">]</span>
+<span class="token keyword">if</span> exists <span class="token punctuation">{</span>
+    <span class="token comment">//code here......</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//2.直接通过key查询对应的value</span>
+value <span class="token operator">:=</span> dict<span class="token punctuation">[</span><span class="token string">"blue"</span><span class="token punctuation">]</span>
+<span class="token keyword">if</span> value <span class="token operator">!=</span> <span class="token string">""</span> <span class="token punctuation">{</span>
+    <span class="token comment">//code here......</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//遍历map</span>
+<span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token operator">:=</span> dict <span class="token punctuation">{</span>
+    <span class="token comment">//code here......</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//在map中增加和修改元素的话就非常简单,直接写就行</span>
+dict<span class="token punctuation">[</span><span class="token string">"Red"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span>
+
+<span class="token comment">//删除一个key，直接使用内置的delete函数</span>
+<span class="token function">delete</span><span class="token punctuation">(</span>dict<span class="token punctuation">,</span> <span class="token string">"Red"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>//明天就写完</p>
 
                 
             </div>
@@ -958,7 +1036,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.3k</span>
+                        class="white-color">5.8k</span>
             
             
             
