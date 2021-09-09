@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-09-08T15:54:59.175Z</updated>
+  <updated>2021-09-09T15:29:15.657Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -17,11 +17,24 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Golang笔记(2)</title>
+    <link href="https://xgyu.github.io/2021/09/09/golang-bi-ji-2/"/>
+    <id>https://xgyu.github.io/2021/09/09/golang-bi-ji-2/</id>
+    <published>2021-09-09T15:29:15.000Z</published>
+    <updated>2021-09-09T15:29:15.657Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>Golang笔记(1)</title>
     <link href="https://xgyu.github.io/2021/09/07/golang-bi-ji-1/"/>
     <id>https://xgyu.github.io/2021/09/07/golang-bi-ji-1/</id>
     <published>2021-09-07T15:09:33.000Z</published>
-    <updated>2021-09-08T15:54:59.175Z</updated>
+    <updated>2021-09-09T15:27:01.677Z</updated>
     
     
       
