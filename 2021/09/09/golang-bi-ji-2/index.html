@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    645
                 </div>
                 
 
@@ -475,7 +475,34 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="复合数据类型"><a href="#复合数据类型" class="headerlink" title="复合数据类型"></a>复合数据类型</h2><p> 数组和结构体是聚合类型；它们的值由许多元素或成员字段的值组成。数组是由同构的元素组成——每个数组元素都是完全相同的类型——结构体则是由异构的元素组成的。数组和结构体都是有固定内存大小的数据结构。相比之下，slice和map则是动态的数据结构，它们将根据需要动态增长。 </p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>一般很少会用到数组，大伙都用slice，但是想要熟练使用切片，必须要理解数组的工作原理。</p>
+<p>在Go语言中，数组的长度和元素类型共同决定了数组的类型。下面是数组的一些常用的初始化的方法：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
+a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
+<span class="token comment">//下面这个初始化方式定义了一个含100个元素的数组，最后一个元素被定义为-1，其他元素被定义为0</span>
+a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">99</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>基于Go语言处理数组的僵化，所以很少将数组作为函数的参数进行传递，所以会使用slice来代替数组。</p>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p>其实完全可以将Slice看成是一种变长数组，Slice的底层也确实引用到了数组对象。 一个slice由三个部分构成：<strong>指针、长度和容量</strong>。 </p>
+<p>用<code>[]T</code>来表示一个slice类型，和数组的区别就是中括号内不需要强调序列长度，因为切片的长度是可变的，它会隐式创建一个合适长度的数组，slice的指针指向底层数组。</p>
+<p>下面讲到了一个例子，就是对<code>[]int</code>型的切片进行翻转，切片翻转可以解决若干问题，后面将会看到切片翻转的一个简单应用。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">reverse</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> j<span class="token punctuation">;</span> i<span class="token punctuation">,</span> j <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> j<span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">{</span>
+        s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个方法的经典应用是将slice循环向左/向右循环n位。</p>
+<p>对于两个slice之间的比较，遵循以下三条规则：</p>
+<ul>
+<li>Go语言内置库仅支持两个字节型（[]byte）的slice是否相等，使用<code>bytes.Equal</code>函数</li>
+<li>合法的比较操作是和nil作比较，回想一下，什么情况下切片会和nil相等呢？</li>
+<li>对于其他的切片比较操作，只能编写函数展开元素比较</li>
+</ul>
+<p>不过，如果要验证一个slice是否为空，应该使用len(s) == 0而不是通过nil。</p>
+
                 
             </div>
             <hr/>
@@ -925,7 +952,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.9k</span>
+                        class="white-color">6.5k</span>
             
             
             
