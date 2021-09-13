@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    510
+                    764
                 </div>
                 
 
@@ -502,6 +502,25 @@
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> ages <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>不可以向上面这个nil值的map中插入元素，否则会报panic异常，所以在存元素之前必须先创建它。</p>
+<p>与slice一样，不可以直接通过==来判断两个map是否相等，而是要通过一个个元素遍历的方式，但是map的比较方式又与slice有不同，具体不同在于：<strong>需要确定要比较的键在另外一个map中是否存在</strong>，也就是需要进行如下比较：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">equal</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token function">len</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> xv <span class="token operator">:=</span> <span class="token keyword">range</span> x <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> yv<span class="token punctuation">,</span> ok <span class="token operator">:=</span> y<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>ok <span class="token operator">||</span> yv <span class="token operator">!=</span> xv <span class="token punctuation">{</span>	<span class="token comment">//key step</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果没有这一步的话，以下面的map比较为例：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// True if equal is written incorrectly.</span>
+<span class="token function">equal</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token string">"A"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token string">"B"</span><span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>在第二个map中，没有“A”这个键，所以如果带入键“A”会返回0，而第一个map中“A”对应的值正好是0，这样就认为他们相等了，但实际上它们并不相等。</p>
+<p>map还有其他复杂的用法，比如key和value可以是复杂类型，甚至是map嵌套map，等到需要使用时再去查阅即可。</p>
 
                 
             </div>
@@ -735,18 +754,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/12/golang-bi-ji-3/">
+                <a href="/2021/09/13/golang-bi-ji-4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Golang笔记(3)——Map">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(4)——结构体及其他">
                         
-                        <span class="card-title">Golang笔记(3)——Map</span>
+                        <span class="card-title">Golang笔记(4)——结构体及其他</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -756,9 +774,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-12
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -767,7 +785,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -952,7 +969,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">7.9k</span>
+                        class="white-color">8.2k</span>
             
             
             
