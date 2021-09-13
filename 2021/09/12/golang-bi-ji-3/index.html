@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang笔记(2)——数组和切片, XGYu">
+    <meta name="keywords" content="Golang笔记(3)——Map, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang笔记(2)——数组和切片 | XGYu</title>
+    <title>Golang笔记(3)——Map | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang笔记(2)——数组和切片</h1>
+                    <h1 class="description center-align post-title">Golang笔记(3)——Map</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-09
+                    2021-09-12
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    510
                 </div>
                 
 
@@ -475,99 +475,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="复合数据类型"><a href="#复合数据类型" class="headerlink" title="复合数据类型"></a>复合数据类型</h2><p> 数组和结构体是聚合类型；它们的值由许多元素或成员字段的值组成。数组是由同构的元素组成——每个数组元素都是完全相同的类型——结构体则是由异构的元素组成的。数组和结构体都是有固定内存大小的数据结构。相比之下，slice和map则是动态的数据结构，它们将根据需要动态增长。 </p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>一般很少会用到数组，大伙都用slice，但是想要熟练使用切片，必须要理解数组的工作原理。</p>
-<p>在Go语言中，数组的长度和元素类型共同决定了数组的类型。下面是数组的一些常用的初始化的方法：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
-a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
-<span class="token comment">//下面这个初始化方式定义了一个含100个元素的数组，最后一个元素被定义为-1，其他元素被定义为0</span>
-a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">99</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <p>在Go语言中，map是哈希表的引用，写作<code>map[K]V</code>，其中K是键(key)的数据类型，V是值(value)的数据类型。一旦确定了这个map，那么所有的键和所有的值都需要遵守相应的数据类型，注意，<strong>键(key)必须支持Go语言中的<code>==</code>运算符</strong>，这样才可以判断相应的key在map中是否存在。</p>
+<p>内置的make函数可以创建一个map：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>基于Go语言处理数组的僵化，所以很少将数组作为函数的参数进行传递，所以会使用slice来代替数组。</p>
-<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p>其实完全可以将Slice看成是一种变长数组，Slice的底层也确实引用到了数组对象。 一个slice由三个部分构成：<strong>指针、长度和容量</strong>。 </p>
-<p>用<code>[]T</code>来表示一个slice类型，和数组的区别就是中括号内不需要强调序列长度，因为切片的长度是可变的，它会隐式创建一个合适长度的数组，slice的指针指向底层数组。</p>
-<p>下面讲到了一个例子，就是对<code>[]int</code>型的切片进行翻转，切片翻转可以解决若干问题，后面将会看到切片翻转的一个简单应用。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">reverse</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">for</span> i<span class="token punctuation">,</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> j<span class="token punctuation">;</span> i<span class="token punctuation">,</span> j <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> j<span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">{</span>
-        s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>还记得吗？make函数可以为三种类型进行初始化，slice、map和chan。</p>
+<p>另外一种与上式等效的创建map的方法：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>这个方法的经典应用是将slice循环向左/向右循环n位。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//旋转除了使用考研时非常经典的前n个元素翻转、后面剩余元素翻转，然后整体进行一个旋转</span>
-<span class="token comment">//下面的例子是将slice向左旋转两个单位</span>
-s <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+<p>或者可以为map设置一些初始的字面值：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
+    <span class="token string">"alice"</span><span class="token punctuation">:</span> 	<span class="token number">31</span><span class="token punctuation">,</span>
+    <span class="token string">"charlie"</span><span class="token punctuation">:</span> 	<span class="token number">34</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token comment">//其次，还可以使用内置的copy元素比较简单的实现旋转</span>
-<span class="token keyword">func</span> <span class="token function">rotate</span><span class="token punctuation">(</span>t <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
-    tmp <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> t<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token operator">-</span>n<span class="token punctuation">]</span><span class="token punctuation">,</span> t<span class="token punctuation">[</span>n<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token operator">-</span>n<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tmp<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> t
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用Go语言内置的delete函数可以直接删除元素：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">delete</span><span class="token punctuation">(</span>ages<span class="token punctuation">,</span> <span class="token string">"alice"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>对于两个slice之间的比较，遵循以下三条规则：</p>
-<ul>
-<li>Go语言内置库仅支持两个字节型（[]byte）的slice是否相等，使用<code>bytes.Equal</code>函数</li>
-<li>合法的比较操作是和nil作比较，回想一下，什么情况下切片会和nil相等呢？</li>
-<li>对于其他的切片比较操作，只能编写函数展开元素比较</li>
-</ul>
-<p>不过，如果要验证一个slice是否为空，应该使用<code>len(s) == 0</code>而不是通过nil。</p>
-<p>内置的make函数创建一个指定元素类型、长度和容量的slice。容量部分可以省略，在这种情况下，容量将等于长度。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">)</span>
-<span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">,</span> <span class="token builtin">cap</span><span class="token punctuation">)</span> <span class="token comment">// same as make([]T, cap)[:len]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>即使删除一个map中不存在的元素也没有关系，如果查找失败，将返回value对应的零值，可是，我们要怎样区分这个零值是代表键值对不存在，还是它的值本来就是零呢？这就需要进行如下测试：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">age<span class="token punctuation">,</span> ok <span class="token operator">:=</span> ages<span class="token punctuation">[</span><span class="token string">"bob"</span><span class="token punctuation">]</span>
+<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span><span class="token comment">/* if "bob" is not a key in the map; age == 0 */</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>还记得吗？make可以为三种数据类型分配内存，slice、map和chan，当我们为slice分配内存时，应尽量预估到可能的最大值，避免二次分配内存。</p>
-<p>向slice中添加新元素，要使用append函数，每次调用append函数，必须先检测slice底层数组是否有足够的容量来保存新添加的元素。<strong>如果有足够空间的话</strong>，直接扩展slice（依然在原有的底层数组之上），将新添加的y元素复制到新扩展的空间，并返回slice。因此，输入的x和输出的z共享相同的底层数组。<strong>如果没有足够的增长空间的话</strong>，append函数则会先分配一个足够大的slice用于保存新的结果，先将输入的x复制到新的空间，然后添加y元素，结果z和输入的x引用的将是不同的底层数组。如果开辟了新的空间，它不是简单地开辟所需要的那部分空间，而是直接翻倍以避免即将到来的多次内存分配。</p>
-<p>使用slice可以完成若干功能，如模拟栈等，这里可以等待后续学习更多的知识进行补充。</p>
-<p>遇到的一个练习题：</p>
-<blockquote>
-<p> <strong>练习 4.5：</strong> 写一个函数在原地完成消除[]string中相邻重复的字符串的操作。 </p>
-</blockquote>
-<p>找到了一个特别精巧的解法，一定要好好学习一下这种思路，对于解决字符串相关问题都有帮助：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//首先是原地操作，其次是continue的使用，对于大于两个相同的字符串也同样适用</span>
-<span class="token keyword">func</span> <span class="token function">unique</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">{</span>
-    k <span class="token operator">:=</span> <span class="token number">0</span>
-    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> s<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">==</span> v <span class="token punctuation">{</span>
-            <span class="token keyword">continue</span>
-        <span class="token punctuation">}</span>
-        k <span class="token operator">++</span>
-        s<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样我们就能知道，如果键bob对应的值为0的话，到底是代表bob不存在，还是他的年龄本来就是0岁了！</p>
+<p>注意，不可以对map元素进行取址操作，因为map是动态的，如果map扩容的话，会被分配到一个更大的内存空间中去，对于一个内存变化的元素，自然就不可以取地址，否则就是非常危险的行为。</p>
+<p>一个仅声明但未分配内存的map值为nil，即没有引用任何哈希表，什么是<strong>仅声明但未分配内存</strong>的map呢？就是通过下面方式声明的：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> ages <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>下面这道习题涉及到了UTF-8编码与Go语言中的byte的关系问题，以及编码方式的转换：</p>
-<blockquote>
-<p> <strong>练习 4.6：</strong> 编写一个函数，原地将一个UTF-8编码的[]byte类型的slice中相邻的空格（参考unicode.IsSpace）替换成一个空格返回 。</p>
-</blockquote>
-<p>这道题目我查阅了相关资料，结合题目，找到了编码转换的一些技巧。首先看这是一类什么样的切片：是UTF-8编码的[]byte类型的切片，但是这里面不可以直接去遍历[]byte，因为一个byte类型（底层类型是uint8）并不是用来存储一个UTF-8码字的！在Go语言中，使用rune（实际上的底层数据结构是int32）来存储UTF-8的字符，所以需要进行转换。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">byteDelReSpace</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span> <span class="token punctuation">{</span>
-	<span class="token keyword">var</span> i <span class="token builtin">int</span>
-	<span class="token keyword">for</span> l <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> l <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">{</span>
-		r<span class="token punctuation">,</span> size <span class="token operator">:=</span> utf8<span class="token punctuation">.</span><span class="token function">DecodeRune</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-		l <span class="token operator">+=</span> size
-		<span class="token keyword">if</span> unicode<span class="token punctuation">.</span><span class="token function">IsSpace</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">if</span> i <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> b<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token function">byte</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token punctuation">[</span>i<span class="token operator">+</span>size<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-				b<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">byte</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span>
-				<span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token punctuation">[</span>i<span class="token operator">+</span>size<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-				i <span class="token operator">++</span>
-			<span class="token punctuation">}</span>
-		<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-			i <span class="token operator">+=</span> size
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<p>不可以向上面这个nil值的map中插入元素，否则会报panic异常，所以在存元素之前必须先创建它。</p>
 
                 
             </div>
@@ -594,7 +528,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/09/09/golang-bi-ji-2/">https://xgyu.github.io/2021/09/09/golang-bi-ji-2/</a>
+                    <a href="https://xgyu.github.io/2021/09/12/golang-bi-ji-3/">https://xgyu.github.io/2021/09/12/golang-bi-ji-3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -801,9 +735,10 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/09/12/golang-bi-ji-3/">
                     <div class="card-image">
@@ -821,9 +756,9 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -832,6 +767,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -842,13 +778,13 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/07/golang-bi-ji-1/">
+                <a href="/2021/09/09/golang-bi-ji-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(1)——字符串">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Golang笔记(2)——数组和切片">
                         
-                        <span class="card-title">Golang笔记(1)——字符串</span>
+                        <span class="card-title">Golang笔记(2)——数组和切片</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -859,7 +795,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-09
                             </span>
                         <span class="publish-author">
                             
