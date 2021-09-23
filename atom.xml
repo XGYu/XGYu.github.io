@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-09-15T15:45:22.308Z</updated>
+  <updated>2021-09-22T16:05:27.474Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang笔记(5)——函数</title>
+    <link href="https://xgyu.github.io/2021/09/15/golang-bi-ji-5/"/>
+    <id>https://xgyu.github.io/2021/09/15/golang-bi-ji-5/</id>
+    <published>2021-09-15T15:46:41.000Z</published>
+    <updated>2021-09-22T16:05:27.474Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;对于多返回值的函数而言，有两种情况，一是返回参数没有显式的变量名，二是有显式的变量名，他们的区别在于：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于返回参数不显式指明变量名时，return语句必须将相应的参数指明，例如：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Golang笔记(4)——结构体及其他</title>
