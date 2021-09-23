@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    794
+                    863
                 </div>
                 
 
@@ -483,6 +483,18 @@
 <li><strong>参数可能是空值，传指针可以判断是否为nil</strong></li>
 <li> <strong>需要修改map中的结构体的变量的时候也需要使用结构体地址作为map的value</strong> </li>
 </ul>
+<p>有两种创建结构体的方法：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Point <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    X <span class="token builtin">int</span>
+    Y <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> P1 Point
+
+P2 <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>Point<span class="token punctuation">)</span>	<span class="token comment">//P2的类型相当于*Point 但由于Go语言的语法糖，也可以直接使用 . </span>
+P2<span class="token punctuation">.</span>X <span class="token operator">=</span> <span class="token number">1</span>
+P2<span class="token punctuation">.</span>Y <span class="token operator">=</span> <span class="token number">2</span>			<span class="token comment">//而在C或C++中 这种情况需要使用 -&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>不到万不得已，尽量避免使用指针。</p>
 <p>下面给出一个结构体的使用示例，比如现在有一个库提供了各种几何图形，现在给定圆和轮子，我们初步可以把圆和轮子定义为如下两个结构体：</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Circle <span class="token keyword">struct</span> <span class="token punctuation">{</span>
@@ -997,7 +1009,7 @@ w <span class="token operator">=</span> Wheel<span class="token punctuation">{</
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">9.5k</span>
+                        class="white-color">9.6k</span>
             
             
             
