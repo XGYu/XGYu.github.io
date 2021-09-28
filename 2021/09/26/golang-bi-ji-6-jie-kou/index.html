@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang笔记(1)——字符串, XGYu">
+    <meta name="keywords" content="Golang笔记(6)--接口, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang笔记(1)——字符串 | XGYu</title>
+    <title>Golang笔记(6)--接口 | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang笔记(1)——字符串</h1>
+                    <h1 class="description center-align post-title">Golang笔记(6)--接口</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-07
+                    2021-09-26
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    962
+                    1.5k
                 </div>
                 
 
@@ -475,143 +475,121 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>学习Go语言的主要目的是为了在明年暑假左右找到一份实习，目标是年前完成语言和框架的学习，年后开始刷题、学习网络、数据库等内容，加油！！！</p>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>在学习字符串的过程中，得益于Go语言类似于Python切片的特性，以及对<code>UTF-8</code>编码方式的支持，发现了一个非常精妙的解决字符串前缀和后缀问题的解决方法。具体的解决代码如下：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//测试一个字符串是否是另一个字符串的前缀</span>
-<span class="token keyword">func</span> <span class="token function">HasPrefix</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> prefix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">==</span> prefix
+                <p>接口是Go语言的设计之道，它的核心思想在于接口和实现者的<strong>解耦</strong>，接口实现者只需知道实现的是什么样子的接口，但无须指明实现哪一个接口。编译器知道最终编译时使用哪个类型实现哪个接口，或者接口应该由谁来实现。有一种说法更为贴切，称接口为Protocol，即接口认为是双方都接受的一种合作协议，设计接口的不必过问使用者会在什么条件下使用，使用者也不必了解接口实现的细节。</p>
+<h3 id="接口的定义"><a href="#接口的定义" class="headerlink" title="接口的定义"></a><strong>接口的定义</strong></h3><p>接口形式代码：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> 接口类型名 <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    方法名<span class="token function">1</span><span class="token punctuation">(</span> 参数列表<span class="token number">1</span> <span class="token punctuation">)</span> 返回值列表<span class="token number">1</span>
+    方法名<span class="token function">2</span><span class="token punctuation">(</span> 参数列表<span class="token number">2</span> <span class="token punctuation">)</span> 返回值列表<span class="token number">2</span>
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>接口类型名：使用type将接口定义为自定义的类型名，一般结尾命名为er</li>
+<li>方法名：方法名和接口名的首字母均为大写时，可以被接口所在包之外的代码访问</li>
+<li>参数列表、返回值列表：与函数或方法的定义方式类似，参数变量名可以省略</li>
+</ul>
+<p>Go语言中的接口简而精，精准描述本接口的功能，就可以使用多个简单的接口嵌入或组合为复杂接口。</p>
+<h3 id="接口的实现"><a href="#接口的实现" class="headerlink" title="接口的实现"></a><strong>接口的实现</strong></h3><ul>
+<li><strong>条件一：接口的方法与实现接口的类型方法格式一致</strong></li>
+</ul>
+<p>格式包括函数名和方法签名，实现内容必须一致，下面是对接口实现的一个简单示例：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"fmt"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> DataWriter <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">WriteData</span><span class="token punctuation">(</span>data <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token builtin">error</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">//后缀测试</span>
-<span class="token keyword">func</span> <span class="token function">HasSuffix</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> suffix <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token function">len</span><span class="token punctuation">(</span>suffix<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">len</span><span class="token punctuation">(</span>suffix<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">==</span> suffix
+<span class="token keyword">type</span> file <span class="token keyword">struct</span> <span class="token punctuation">{</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">//应用：包含子串测试</span>
-<span class="token keyword">func</span> <span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> substr <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> i <span class="token operator">++</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token function">HasPrefix</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> substr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token comment">//file这个结构实现了WriteData接口</span>
+<span class="token comment">//这里面方法名必须和接口定义的名字一致，里面的签名(方法)也应该保持一致</span>
+<span class="token comment">//比如把WriteData写成writedata，把interface{}写成string，都是不允许的，会在29行报错</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d <span class="token operator">*</span>file<span class="token punctuation">)</span> <span class="token function">WriteData</span><span class="token punctuation">(</span>data <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"WriteData:"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+    f <span class="token operator">:=</span> <span class="token function">new</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span>
+    
+    <span class="token keyword">var</span> writer DataWriter
+    
+    <span class="token comment">//f之所以能赋值给writer，就是因为它实现了writer接口中的WriteData()方法</span>
+    writer <span class="token operator">=</span> f
+    
+    writer<span class="token punctuation">.</span><span class="token function">WriteData</span><span class="token punctuation">(</span><span class="token string">"data"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>条件二：接口定义的所有方法都要被实现</strong></li>
+</ul>
+<p>上面的例子中，接口只定义了一个方法，但当一个接口中有多个方法时，只有<strong>这些方法都被实现</strong>了，接口才能被正确编译并使用。</p>
+<p>那么在类似于Java的SpringBoot架构中，经常会看到一些项目中的类，是一层一层派生的，然后可以构造出一棵非常复杂的派生树，这是因为这些语言<strong>强耦合</strong>的构建关系，但如之前所言，Go语言是弱耦合的，所以在Go中不会出现这些复杂的派生树。对于 Go 语言来说，非侵入式设计让实现者的所有类型均是平行的、组合的。使用 GO 语言时，不需要同时也不可能有“类派生图”，开发者唯一需要关注的就是“<strong>我需要什么？</strong>”，以及“<strong>我能实现什么？</strong>”。</p>
+<h3 id="语言类型和接口的关系"><a href="#语言类型和接口的关系" class="headerlink" title="语言类型和接口的关系"></a><strong>语言类型和接口的关系</strong></h3><ul>
+<li><strong>一个类型可以实现多个接口</strong></li>
+</ul>
+<p>这个意思就是说，比如我定义了一个结构体，这个结构体编写了若干个回调函数，这些方法中既包含了接口A，也包含了接口B、C……举例如下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//这里定义了一个写的接口A</span>
+<span class="token keyword">type</span> Writer <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">Write</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//这里定义了一个关闭接口B</span>
+<span class="token keyword">type</span> Closer <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//定义一个网络连接的结构体</span>
+<span class="token comment">//当然，接口的实现并不局限于结构体，任何类型都可以实现接口</span>
+<span class="token keyword">type</span> Socket <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//这个结构体类型实现写接口A</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Socket<span class="token punctuation">)</span> <span class="token function">Write</span><span class="token punctuation">(</span>p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//这个结构一类型实现关闭接口B</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Socket<span class="token punctuation">)</span> <span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><strong>多个类型可以实现相同接口</strong></li>
+</ul>
+<p>一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现。也就是说，使用者并不关心某个接口的方法是通过一个类型完全实现的，还是通过多个结构嵌入到一个结构体中拼凑起来共同实现的。</p>
+<h3 id="接口的范例——sort-Interface接口"><a href="#接口的范例——sort-Interface接口" class="headerlink" title="接口的范例——sort.Interface接口"></a><strong>接口的范例——sort.Interface接口</strong></h3><p>对于常见的数据类型，接口已经提供了轮子，直接使用即可，对于想要自己实现这个接口，则必须自行实现接口的三个方法：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Interface <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 获取元素数量</span>
+    <span class="token function">Len</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span>
+    
+    <span class="token comment">// 小于比较</span>
+    <span class="token function">Less</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
+    
+    <span class="token comment">// 交换元素</span>
+    <span class="token function">Swap</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>还有，对于结构体的排序也要按照自己的需求去定制排序规则，当然，这里最关键的是怎样去定义小于，对于结构体的排序，可以实现这三个方法，当然可以提供另外一个利用标准库的方法：</p>
+<p>标准库在sort包中提供了sort.Slice()函数进行了更简单的排序，这里面需要传入待排序的数据，以及实现less的方法定义，函数定义如下：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Slice</span><span class="token punctuation">(</span>x <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> less <span class="token keyword">func</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>下面是一个实现的实例，仅体现部分代码：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">sort<span class="token punctuation">.</span><span class="token function">Slice</span><span class="token punctuation">(</span>heros<span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> heros<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">!=</span> heros<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> heros<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">&lt;</span> heros<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind
         <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token boolean">false</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token keyword">return</span> heros<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Name <span class="token operator">&lt;</span> heros<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Name
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>无论使用何种编程语言，对字符串的处理通常而言是最多的，所以一些常见的对字符串的处理方法要记住或者有印象，防止再去重复造轮子，那么在圣经一书中，给出了四个常用的处理字符串的包：<code>bytes、strings、strconv、unicode</code>，关于字符串的许多方法都可以在其中找到。</p>
-<p>下面的例子展示了为数值每隔三个字符加上逗号，如“12345”变为“12,345”：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//下面的这个方法仅适用于整数，不适用于浮点数</span>
-<span class="token keyword">func</span> <span class="token function">comma</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
-    n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> s
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> s<span class="token punctuation">[</span>n<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">//习题3.10: 改为非递归版本</span>
-<span class="token keyword">func</span> <span class="token function">commaNonre</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> buf bytes<span class="token punctuation">.</span>Buffer
-    i <span class="token operator">:=</span> <span class="token number">0</span>
-    <span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span> n <span class="token operator">&gt;</span> <span class="token number">3</span><span class="token punctuation">;</span> n<span class="token punctuation">,</span> i <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">3</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> n <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
-            i <span class="token operator">=</span> n <span class="token operator">%</span> <span class="token number">3</span>
-            buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span><span class="token punctuation">{</span>
-            buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">//习题3.11: 支持浮点数及增加对正负号的处理</span>
-<span class="token keyword">func</span> <span class="token function">commaDecimal</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
-    n <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">3</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> s
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> <span class="token function">commaDecimal</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">func</span> <span class="token function">prefectComma</span><span class="token punctuation">(</span>s <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> buf bytes<span class="token punctuation">.</span>Buffer
-    <span class="token keyword">if</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"+"</span><span class="token punctuation">)</span> <span class="token operator">||</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"-"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        s <span class="token operator">=</span> s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">if</span> strings<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        i <span class="token operator">:=</span> strings<span class="token punctuation">.</span><span class="token function">Index</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">)</span>
-        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"."</span><span class="token punctuation">)</span>
-        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">commaDecimal</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        buf<span class="token punctuation">.</span><span class="token function">WriteString</span><span class="token punctuation">(</span><span class="token function">comma</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>值得注意的地方是，字符串是只读的，而slice元素则可以被自由更改。</p>
-<p>学习字符串时，遇到了这样一道习题：</p>
-<blockquote>
-<p> 编写一个函数，判断两个字符串是否是相互打乱的，也就是说它们有着相同的字符，但是对应不同的顺序。 </p>
-</blockquote>
-<p>那么这个问题使用<code>map</code>是很好解决的，但是自己在学习其他语言的时候又没有很好地使用过这个数据结构，所以现在先简单的学习一下：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//创建一个映射，键的类型为string，值的类型为int，有两种初始化方法</span>
-<span class="token comment">//下面的代码为第1种初始化方法，此时创建了一个空的map</span>
-dict <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-<span class="token comment">//下面的代码为第2种初始化方法，这与上面的代码是等价的</span>
-dict <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-<span class="token comment">//测试map中的key值是否存在</span>
-<span class="token comment">//1.同时取value及一个表示key是否存在的bool型标志</span>
-value<span class="token punctuation">,</span> exists <span class="token operator">:=</span> dict<span class="token punctuation">[</span><span class="token string">"Blue"</span><span class="token punctuation">]</span>
-<span class="token keyword">if</span> exists <span class="token punctuation">{</span>
-    <span class="token comment">//code here......</span>
-<span class="token punctuation">}</span>
-<span class="token comment">//2.直接通过key查询对应的value</span>
-value <span class="token operator">:=</span> dict<span class="token punctuation">[</span><span class="token string">"blue"</span><span class="token punctuation">]</span>
-<span class="token keyword">if</span> value <span class="token operator">!=</span> <span class="token string">""</span> <span class="token punctuation">{</span>
-    <span class="token comment">//code here......</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">//遍历map</span>
-<span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token operator">:=</span> dict <span class="token punctuation">{</span>
-    <span class="token comment">//code here......</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">//在map中增加和修改元素的话就非常简单,直接写就行</span>
-dict<span class="token punctuation">[</span><span class="token string">"Red"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span>
-
-<span class="token comment">//删除一个key，直接使用内置的delete函数</span>
-<span class="token function">delete</span><span class="token punctuation">(</span>dict<span class="token punctuation">,</span> <span class="token string">"Red"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>所以这个题目的解决方法用图以O(N)的复杂度完成：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">strShaffle</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> str2 <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-    dict <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">rune</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ch <span class="token operator">:=</span> <span class="token keyword">range</span> str1 <span class="token punctuation">{</span>
-        <span class="token boolean">_</span><span class="token punctuation">,</span> exist <span class="token operator">:=</span> dict<span class="token punctuation">[</span>ch<span class="token punctuation">]</span>
-        <span class="token keyword">if</span> exist <span class="token punctuation">{</span>
-            dict<span class="token punctuation">[</span>ch<span class="token punctuation">]</span> <span class="token operator">++</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            dict<span class="token punctuation">[</span>ch<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ch <span class="token operator">:=</span> <span class="token keyword">range</span> str2 <span class="token punctuation">{</span>
-        <span class="token boolean">_</span><span class="token punctuation">,</span> exist <span class="token operator">:=</span> dict<span class="token punctuation">[</span>ch<span class="token punctuation">]</span>
-        <span class="token keyword">if</span> exist <span class="token punctuation">{</span>
-            dict<span class="token punctuation">[</span>ch<span class="token punctuation">]</span> <span class="token operator">--</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> value <span class="token operator">:=</span> <span class="token keyword">range</span> dict <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> value <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<p>它就是直接在这个方法里面再把这个less方法给实现掉就完事了。</p>
+<h3 id="空接口类型"><a href="#空接口类型" class="headerlink" title="空接口类型"></a><strong>空接口类型</strong></h3><p>空接口从实现的角度看，任何类型的值都可以满足接口的需求。可以把这个接口比作集装箱，啥东西都可以往里面装，所以下面的空接口赋值是成立的：</p>
 
                 
             </div>
@@ -638,7 +616,7 @@ dict<span class="token punctuation">[</span><span class="token string">"Red"</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/09/07/golang-bi-ji-1/">https://xgyu.github.io/2021/09/07/golang-bi-ji-1/</a>
+                    <a href="https://xgyu.github.io/2021/09/26/golang-bi-ji-6-jie-kou/">https://xgyu.github.io/2021/09/26/golang-bi-ji-6-jie-kou/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -845,54 +823,18 @@ dict<span class="token punctuation">[</span><span class="token string">"Red"</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/09/golang-bi-ji-2/">
+                <a href="/2021/09/26/golang-bi-ji-6-jie-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Golang笔记(2)——数组和切片">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Golang笔记(6)--接口">
                         
-                        <span class="card-title">Golang笔记(2)——数组和切片</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-09
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            YuXingguo
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/06/07/qian-duan-xue-xi-lu-xian-3-css-zhong-ji/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="前端学习路线(3)-CSS中级">
-                        
-                        <span class="card-title">前端学习路线(3)-CSS中级</span>
+                        <span class="card-title">Golang笔记(6)--接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -903,7 +845,45 @@ dict<span class="token punctuation">[</span><span class="token string">"Red"</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            YuXingguo
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/09/15/golang-bi-ji-5-han-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Golang笔记(5)——函数">
+                        
+                        <span class="card-title">Golang笔记(5)——函数</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-15
                             </span>
                         <span class="publish-author">
                             
@@ -1060,7 +1040,7 @@ dict<span class="token punctuation">[</span><span class="token string">"Red"</sp
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">9.6k</span>
+                        class="white-color">11k</span>
             
             
             

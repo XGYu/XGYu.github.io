@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-09-22T16:05:27.474Z</updated>
+  <updated>2021-09-28T15:53:24.790Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -17,9 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Golang笔记(6)--接口</title>
+    <link href="https://xgyu.github.io/2021/09/26/golang-bi-ji-6-jie-kou/"/>
+    <id>https://xgyu.github.io/2021/09/26/golang-bi-ji-6-jie-kou/</id>
+    <published>2021-09-26T03:46:18.000Z</published>
+    <updated>2021-09-28T15:53:24.790Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;接口是Go语言的设计之道，它的核心思想在于接口和实现者的&lt;strong&gt;解耦&lt;/strong&gt;，接口实现者只需知道实现的是什么样子的接口，但无须指明实现哪一个接口。编译器知道最终编译时使用哪个类型实现哪个接口，或者接口应该由谁来实现。有一种说法更为贴切，称接口为Protoc</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>Golang笔记(5)——函数</title>
-    <link href="https://xgyu.github.io/2021/09/15/golang-bi-ji-5/"/>
-    <id>https://xgyu.github.io/2021/09/15/golang-bi-ji-5/</id>
+    <link href="https://xgyu.github.io/2021/09/15/golang-bi-ji-5-han-shu/"/>
+    <id>https://xgyu.github.io/2021/09/15/golang-bi-ji-5-han-shu/</id>
     <published>2021-09-15T15:46:41.000Z</published>
     <updated>2021-09-22T16:05:27.474Z</updated>
     
@@ -43,8 +64,8 @@
   
   <entry>
     <title>Golang笔记(4)——结构体及其他</title>
-    <link href="https://xgyu.github.io/2021/09/13/golang-bi-ji-4/"/>
-    <id>https://xgyu.github.io/2021/09/13/golang-bi-ji-4/</id>
+    <link href="https://xgyu.github.io/2021/09/13/golang-bi-ji-4-jie-gou-ti/"/>
+    <id>https://xgyu.github.io/2021/09/13/golang-bi-ji-4-jie-gou-ti/</id>
     <published>2021-09-13T14:58:18.000Z</published>
     <updated>2021-09-23T16:03:05.889Z</updated>
     
@@ -64,8 +85,8 @@
   
   <entry>
     <title>Golang笔记(3)——Map</title>
-    <link href="https://xgyu.github.io/2021/09/12/golang-bi-ji-3/"/>
-    <id>https://xgyu.github.io/2021/09/12/golang-bi-ji-3/</id>
+    <link href="https://xgyu.github.io/2021/09/12/golang-bi-ji-3-map/"/>
+    <id>https://xgyu.github.io/2021/09/12/golang-bi-ji-3-map/</id>
     <published>2021-09-12T05:16:49.000Z</published>
     <updated>2021-09-13T04:44:49.125Z</updated>
     
@@ -85,8 +106,8 @@
   
   <entry>
     <title>Golang笔记(2)——数组和切片</title>
-    <link href="https://xgyu.github.io/2021/09/09/golang-bi-ji-2/"/>
-    <id>https://xgyu.github.io/2021/09/09/golang-bi-ji-2/</id>
+    <link href="https://xgyu.github.io/2021/09/09/golang-bi-ji-2-shu-zu-he-slice/"/>
+    <id>https://xgyu.github.io/2021/09/09/golang-bi-ji-2-shu-zu-he-slice/</id>
     <published>2021-09-09T15:29:15.000Z</published>
     <updated>2021-09-12T05:14:54.851Z</updated>
     
@@ -106,8 +127,8 @@
   
   <entry>
     <title>Golang笔记(1)——字符串</title>
-    <link href="https://xgyu.github.io/2021/09/07/golang-bi-ji-1/"/>
-    <id>https://xgyu.github.io/2021/09/07/golang-bi-ji-1/</id>
+    <link href="https://xgyu.github.io/2021/09/07/golang-bi-ji-1-zi-fu-chuan/"/>
+    <id>https://xgyu.github.io/2021/09/07/golang-bi-ji-1-zi-fu-chuan/</id>
     <published>2021-09-07T15:09:33.000Z</published>
     <updated>2021-09-09T15:30:47.574Z</updated>
     

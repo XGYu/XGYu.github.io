@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang笔记(3)——Map, XGYu">
+    <meta name="keywords" content="Golang笔记(5)——函数, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang笔记(3)——Map | XGYu</title>
+    <title>Golang笔记(5)——函数 | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang笔记(3)——Map</h1>
+                    <h1 class="description center-align post-title">Golang笔记(5)——函数</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-12
+                    2021-09-15
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    764
+                    537
                 </div>
                 
 
@@ -475,52 +475,39 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>在Go语言中，map是哈希表的引用，写作<code>map[K]V</code>，其中K是键(key)的数据类型，V是值(value)的数据类型。一旦确定了这个map，那么所有的键和所有的值都需要遵守相应的数据类型，注意，<strong>键(key)必须支持Go语言中的<code>==</code>运算符</strong>，这样才可以判断相应的key在map中是否存在。</p>
-<p>内置的make函数可以创建一个map：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>还记得吗？make函数可以为三种类型进行初始化，slice、map和chan。</p>
-<p>另外一种与上式等效的创建map的方法：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>或者可以为map设置一些初始的字面值：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">ages <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
-    <span class="token string">"alice"</span><span class="token punctuation">:</span> 	<span class="token number">31</span><span class="token punctuation">,</span>
-    <span class="token string">"charlie"</span><span class="token punctuation">:</span> 	<span class="token number">34</span>
+                <p>对于多返回值的函数而言，有两种情况，一是返回参数没有显式的变量名，二是有显式的变量名，他们的区别在于：</p>
+<ul>
+<li>对于返回参数不显式指明变量名时，return语句必须将相应的参数指明，例如：</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">findLinks</span><span class="token punctuation">(</span>url <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+    <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err		<span class="token comment">//一种示例</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>使用Go语言内置的delete函数可以直接删除元素：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">delete</span><span class="token punctuation">(</span>ages<span class="token punctuation">,</span> <span class="token string">"alice"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li> 如果一个函数所有的返回值都有显式的变量名，可以使用go语言的bare return特性，也就是操作数可以省略：</li>
+</ul>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">count</span><span class="token punctuation">(</span>url <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>word<span class="token punctuation">,</span> images <span class="token builtin">int</span><span class="token punctuation">,</span> err <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+    <span class="token keyword">return</span>			<span class="token comment">//相当于 return word, images, err</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>即使删除一个map中不存在的元素也没有关系，如果查找失败，将返回value对应的零值，可是，我们要怎样区分这个零值是代表键值对不存在，还是它的值本来就是零呢？这就需要进行如下测试：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go">age<span class="token punctuation">,</span> ok <span class="token operator">:=</span> ages<span class="token punctuation">[</span><span class="token string">"bob"</span><span class="token punctuation">]</span>
-<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span><span class="token comment">/* if "bob" is not a key in the map; age == 0 */</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>以上两种方式不能混用，如果相应的变量没有被赋值，那么它就会被赋为对应类型的零值，例如若err没有被赋值，那么它就是nil。</p>
+<p>其次，在Go语言中，函数也可以作为类型存在，可以被保存在变量中，例如：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">fire</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"fire"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-<p>这样我们就能知道，如果键bob对应的值为0的话，到底是代表bob不存在，还是他的年龄本来就是0岁了！</p>
-<p>注意，不可以对map元素进行取址操作，因为map是动态的，如果map扩容的话，会被分配到一个更大的内存空间中去，对于一个内存变化的元素，自然就不可以取地址，否则就是非常危险的行为。</p>
-<p>一个仅声明但未分配内存的map值为nil，即没有引用任何哈希表，什么是<strong>仅声明但未分配内存</strong>的map呢？就是通过下面方式声明的：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> ages <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> f <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    f <span class="token operator">=</span> fire
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span>		<span class="token comment">//此时将直接打印 fire</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>不可以向上面这个nil值的map中插入元素，否则会报panic异常，所以在存元素之前必须先创建它。</p>
-<p>与slice一样，不可以直接通过==来判断两个map是否相等，而是要通过一个个元素遍历的方式，但是map的比较方式又与slice有不同，具体不同在于：<strong>需要确定要比较的键在另外一个map中是否存在</strong>，也就是需要进行如下比较：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">equal</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token function">len</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token boolean">false</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">for</span> k<span class="token punctuation">,</span> xv <span class="token operator">:=</span> <span class="token keyword">range</span> x <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> yv<span class="token punctuation">,</span> ok <span class="token operator">:=</span> y<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>ok <span class="token operator">||</span> yv <span class="token operator">!=</span> xv <span class="token punctuation">{</span>	<span class="token comment">//key step</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>如果没有这一步的话，以下面的map比较为例：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// True if equal is written incorrectly.</span>
-<span class="token function">equal</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token string">"A"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token string">"B"</span><span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>在第二个map中，没有“A”这个键，所以如果带入键“A”会返回0，而第一个map中“A”对应的值正好是0，这样就认为他们相等了，但实际上它们并不相等。</p>
-<p>map还有其他复杂的用法，比如key和value可以是复杂类型，甚至是map嵌套map，等到需要使用时再去查阅即可。</p>
+<p> 对于那些将运行失败看作是预期结果的函数，它们会返回一个额外的返回值，通常是最后一个，来传递错误信息。正因为如此，在Go语言中也存在着大量判断函数是否返回错误信息的代码语句。</p>
+<p>如果失败原因只有一个，那么可以通过返回布尔值来判断函数运行是否成功，而一旦错误的原因有多种，则需要使用Go语言的error接口类型。</p>
+<p>要注意到，在Go语言的设计哲学中，函数返回了error信息不代表程序发生了异常，它仍然属于一种预期的值，而Go语言发生异常是指发生了未被预料到的问题，并且尽量避免程序中出现异常。Go中大部分函数的代码结构几乎相同，首先是一系列的初始检查，防止错误发生，之后是函数的实际逻辑。</p>
+<p>在Go语言中，<code>...</code>有两种用法，一是用于函数的参数个数不确定，二是可以用于打散slice。</p>
 
                 
             </div>
@@ -547,7 +534,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/09/12/golang-bi-ji-3/">https://xgyu.github.io/2021/09/12/golang-bi-ji-3/</a>
+                    <a href="https://xgyu.github.io/2021/09/15/golang-bi-ji-5-han-shu/">https://xgyu.github.io/2021/09/15/golang-bi-ji-5-han-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -758,13 +745,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/13/golang-bi-ji-4/">
+                <a href="/2021/09/26/golang-bi-ji-6-jie-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(4)——结构体及其他">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Golang笔记(6)--接口">
                         
-                        <span class="card-title">Golang笔记(4)——结构体及其他</span>
+                        <span class="card-title">Golang笔记(6)--接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -775,7 +762,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-26
                         </span>
                         <span class="publish-author">
                             
@@ -795,13 +782,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/09/golang-bi-ji-2/">
+                <a href="/2021/09/13/golang-bi-ji-4-jie-gou-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Golang笔记(2)——数组和切片">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(4)——结构体及其他">
                         
-                        <span class="card-title">Golang笔记(2)——数组和切片</span>
+                        <span class="card-title">Golang笔记(4)——结构体及其他</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -812,7 +799,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-13
                             </span>
                         <span class="publish-author">
                             
@@ -969,7 +956,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">9.6k</span>
+                        class="white-color">11k</span>
             
             
             
