@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-09-28T15:53:24.790Z</updated>
+  <updated>2021-10-14T03:35:56.619Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang笔记(7)——并发</title>
+    <link href="https://xgyu.github.io/2021/09/30/golang-bi-ji-7-bing-fa/"/>
+    <id>https://xgyu.github.io/2021/09/30/golang-bi-ji-7-bing-fa/</id>
+    <published>2021-09-30T02:59:28.000Z</published>
+    <updated>2021-10-14T03:35:56.619Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;并发是Go语言的一个核心概念，轻量级实现并发特性也是Go语言的巨大优势，Go语言得以实现并发的两个重要特性是&lt;strong&gt;goroutine&lt;/strong&gt;和&lt;strong&gt;channel&lt;/strong&gt;，这是Go语言所秉持的CSP（Communicating</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>填坑——设计模式</title>
+    <link href="https://xgyu.github.io/2021/09/29/tian-keng-she-ji-mo-shi/"/>
+    <id>https://xgyu.github.io/2021/09/29/tian-keng-she-ji-mo-shi/</id>
+    <published>2021-09-29T07:41:34.000Z</published>
+    <updated>2021-09-29T07:44:43.532Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Golang笔记(6)--接口</title>

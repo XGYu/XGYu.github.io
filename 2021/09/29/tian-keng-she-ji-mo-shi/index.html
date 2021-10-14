@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="前端学习路线(3)-CSS中级, XGYu">
+    <meta name="keywords" content="填坑——设计模式, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>前端学习路线(3)-CSS中级 | XGYu</title>
+    <title>填坑——设计模式 | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">前端学习路线(3)-CSS中级</h1>
+                    <h1 class="description center-align post-title">填坑——设计模式</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-07
+                    2021-09-29
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    4
                 </div>
                 
 
@@ -475,86 +475,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="层叠与继承"><a href="#层叠与继承" class="headerlink" title="层叠与继承"></a>层叠与继承</h3><p><strong>定义的CSS规则顺序很重要：</strong></p>
-<ul>
-<li>当应用两条相同级别、相同权重的规则到一个元素的时候，<strong>写在后面</strong>的就是实际使用的规则。</li>
-<li> 而权重不同时，描述的范围越小、越具体，优先级越高。如对于元素选择器和类选择器同时命中时，选择类选择器而不是根据前后顺序。</li>
-</ul>
-<p>那么在写CSS样式的时候，通常为基本元素规定一个通用的样式，然后为不同的元素创建对应的类。</p>
-<p>对于优先级的确定，CSS文档给出了一个使用四位数确定优先级的方法，即千百十个位，可以根据下面的例子确定优先级：</p>
-<table>
-<thead>
-<tr>
-<th align="left">选择器</th>
-<th align="left">千位</th>
-<th align="left">百位</th>
-<th align="left">十位</th>
-<th align="left">个位</th>
-<th align="left">优先级</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>h1</code></td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">1</td>
-<td align="left">0001</td>
-</tr>
-<tr>
-<td align="left"><code>h1 + p::first-letter</code></td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">3</td>
-<td align="left">0003</td>
-</tr>
-<tr>
-<td align="left"><code>li &gt; a[href*="en-US"] &gt; .inline-warning</code></td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">2</td>
-<td align="left">2</td>
-<td align="left">0022</td>
-</tr>
-<tr>
-<td align="left"><code>#identifier</code></td>
-<td align="left">0</td>
-<td align="left">1</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">0100</td>
-</tr>
-<tr>
-<td align="left">内联样式</td>
-<td align="left">1</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">0</td>
-<td align="left">1000</td>
-</tr>
-</tbody></table>
-<p>对于<strong>继承</strong>而言，很难有一个规范取明确定义这个继承，而通常情况下要根据<strong>常识</strong>去确定继承关系。当然了，对于继承这种关系，CSS也定义了四个特殊的通用属性，这四个属性值可以被接收。</p>
-<ul>
-<li><code>inherit</code>：这是一个显式的开启继承关系属性，即指定内部元素应当遵从父元素的属性。</li>
-<li><code>initial</code>：使属性值和浏览器默认相同，如果浏览器默认样式中未设置且该属性是自然继承的，那么会设置为 <code>inherit</code> 。</li>
-<li><code>unset</code>： 将属性重置为<strong>自然值</strong>，也就是如果属性是自然继承那么就是 <code>inherit</code>，否则和 <code>initial</code>一样。</li>
-<li><code>revert</code>：用的很少故不赘述。</li>
-</ul>
-<h3 id="CSS布局——display"><a href="#CSS布局——display" class="headerlink" title="CSS布局——display"></a>CSS布局——<code>display</code></h3><p>通过display可以控制元素的布局，默认为块级元素(block，如 <code>&lt;div&gt; &lt;h1&gt;-&lt;h6&gt; &lt;header&gt;</code>等)和行内元素(inline，如 <code>&lt;span&gt; &lt;a&gt; &lt;img&gt;</code>等)。</p>
-<p><strong>特别地</strong>，需要区分 <code>display: none</code>和 <code>visibility: hidden</code>，区别就在于，前者不显示相应元素，不不占用应有的空间，后者也不显示相应的元素，但是会占用对应的空间，不会让出这个位置。</p>
-<p>这里可以通过JavaScript结合控制元素是否显示，等后续学习相应内容再做讨论。</p>
-<h3 id="CSS布局——width和max-width"><a href="#CSS布局——width和max-width" class="headerlink" title="CSS布局——width和max-width"></a>CSS布局——<code>width</code>和<code>max-width</code></h3><p>我们在设计页面时会以理想的情况下设计页面，但实际的浏览器页面会比我们想象的情况更复杂，比如在手机上浏览页面，所以设计出一个自适应的页面是一个基本要求。那么<code>width</code>在这种情况下就不如<code>max-width</code>自适应性更强，这里只要记住，用<code>max-width</code>，那么元素的宽度就是自适应的，使用<code>width</code>，那么它的宽度就是不可变的，这会使得页面不能被完全表示，这也促使我们在设计页面时考虑更多的细节，让读者的观感更好。</p>
-<h3 id="CSS溢出"><a href="#CSS溢出" class="headerlink" title="CSS溢出"></a>CSS溢出</h3><p>定义一个文本框，如果本本内容超过了文本框所能承载的容量，CSS就可以设置显示方式， <code>overflow</code>属性指定在元素的内容太大而无法放入指定区域时是剪裁内容还是添加滚动条。</p>
-<p><code>overflow</code> 属性可设置以下值：</p>
-<ul>
-<li><code>visible</code> - 默认。溢出没有被剪裁。内容在元素框外渲染</li>
-<li><code>hidden</code> - 溢出被剪裁，其余内容将不可见</li>
-<li><code>scroll</code> - 溢出被剪裁，同时添加滚动条以查看其余内容</li>
-<li><code>auto</code> - 与 <code>scroll</code> 类似，但仅在必要时添加滚动条</li>
-</ul>
-<h3 id="CSS浮动"><a href="#CSS浮动" class="headerlink" title="CSS浮动"></a>CSS浮动</h3><p><code>float</code>属性规定元素在页面中如何浮动，不如如果我们想控制左边放图片，右边写文本，这个用HTML是不好写出来的，必须用CSS进行布局。<code>float</code>可以控制元素在容器中的位置，可以为左边或者右边，默认情况下是不浮动的。</p>
-
+                <h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a><strong>单例模式</strong></h3>
                 
             </div>
             <hr/>
@@ -580,7 +501,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/06/07/qian-duan-xue-xi-lu-xian-3-css-zhong-ji/">https://xgyu.github.io/2021/06/07/qian-duan-xue-xi-lu-xian-3-css-zhong-ji/</a>
+                    <a href="https://xgyu.github.io/2021/09/29/tian-keng-she-ji-mo-shi/">https://xgyu.github.io/2021/09/29/tian-keng-she-ji-mo-shi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -791,13 +712,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/07/golang-bi-ji-1-zi-fu-chuan/">
+                <a href="/2021/09/30/golang-bi-ji-7-bing-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(1)——字符串">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(7)——并发">
                         
-                        <span class="card-title">Golang笔记(1)——字符串</span>
+                        <span class="card-title">Golang笔记(7)——并发</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -808,7 +729,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-30
                         </span>
                         <span class="publish-author">
                             
@@ -828,13 +749,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/30/qian-duan-xue-xi-lu-xian-2-css-chu-ji/">
+                <a href="/2021/09/26/golang-bi-ji-6-jie-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="前端学习路线(2)-CSS初级">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Golang笔记(6)--接口">
                         
-                        <span class="card-title">前端学习路线(2)-CSS初级</span>
+                        <span class="card-title">Golang笔记(6)--接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -845,7 +766,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-26
                             </span>
                         <span class="publish-author">
                             
