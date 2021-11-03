@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>Golang笔记(9)--gRPC</title>
+      <link href="2021/11/03/golang-bi-ji-9-grpc/"/>
+      <url>2021/11/03/golang-bi-ji-9-grpc/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Golang笔记(8)——Gin</title>
+      <link href="2021/10/14/golang-bi-ji-8-gin/"/>
+      <url>2021/10/14/golang-bi-ji-8-gin/</url>
+      
+        <content type="html"><![CDATA[<h3 id="写在开头——记录一些配置问题"><a href="#写在开头——记录一些配置问题" class="headerlink" title="写在开头——记录一些配置问题"></a><strong>写在开头——记录一些配置问题</strong></h3><p>我使用的开发环境是基于windows 10虚拟机下的wsl2下的Ubuntu，如果在虚拟机下运行web服务器，那么在主机上是不能使用localhost(127.0.0.0.1)进行访问的，因为虚拟机和本地主机是通过桥接实现的，而且在每次重新启动机器时，它的地址就会换一个，所以在每次使用web服务时，都需要首先找到这个ip地址，方法就是在wsl环境下键入如下命令：</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">ip addr show eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>在这里面就可以找到桥接信息，里面有主机访问虚拟机的ip地址。</p><h3 id="从头开始"><a href="#从头开始" class="headerlink" title="从头开始"></a><strong>从头开始</strong></h3><p>首先创建一个gin的项目，需要打开Go Module并且设置好代理，否则在拉取github的依赖会失败，在中国比较好的代理是七牛云。</p><p>然后需要键入<code>go mod init XXX</code>命令生成go.mod文件，默认包含模块路径和与其Go版本语言，后面会不断夹杂Go Module的知识。</p><p>在主目录需要执行<code>go get -u github.com/gin-gonic/gin</code> 生成一个go.sum文件，文件详细罗列了当前项目直接或间接依赖的所有模块版本，并写明了那些模块版本的 SHA-256 哈希值以确保 Go 在今后的操作中保证项目所依赖的那些模块版本不会被篡改。</p><p>当下载了Gin的依赖包后，go.mod文件也随之改变，增加了require等部分，用于控制模块版本，如果后面加上了indirect的注释，这代表它是传递依赖而并非直接依赖。</p><p>整体上就跟着煎鱼的教程跟着做就可以了，如果遇到一些值得记录的问题我会及时的整理在博客上。</p><p>补充项目结构：</p><pre class="line-numbers language-none"><code class="language-none">gin_framework/├── conf//存储配置文件├── middleware//应用中间件├── models//应用数据库模型├── pkg//第三方包├── routers//路由逻辑处理└── runtime//应用运行时数据<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>那么该怎么让这个项目运行起来呢？以第一版本为例，要先配置ini文件，里面包含了服务器、数据库的信息，然后需要编写全局性的代码，比如一些全局使用的参数、状态码和启动代码，比如要将服务器启动，要连接数据库，加载应用等等工作。为我们要写的项目设计模型，这个模型层下与数据库的属性相对应，上供实例创建与调用。然后编写路由(router)，在路由下编写需要直接操纵数据库的底层方法，然后编写实现路由的方法，这些方法不直接操纵数据库，但是会使用编写好的底层方法。注意根据对应的http方法(GET、POST、PUT、DELETE)编写不同的逻辑。在这个过程中主要使用了一下的包：</p><ul><li><strong>gin</strong>：想要理解gin，关键在于读懂它的Context，在github页面中有大量的篇幅介绍了gin.Context，有时间一定要将它读懂。</li><li><strong>beego-validation</strong>：表单验证库，要对模型内的一些属性做值上的限制，而不是取任何值都能保存在数据库中。</li><li><strong>gorm</strong>：使用数据库的一个ORM框架。</li><li><strong>com</strong>：工具包，在处理数据时非常有用。</li></ul><h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a><strong>JWT</strong></h3><p>JWT的全称是Json Web Token，说白了它就是一个token，再多加点字就是，JWT就是一个生成token的规范，用于身份认证(授权)，或者进行信息交换，用于作为JSON对象在各方之间安全地传输信息。</p><h3 id="Gin框架如何工作？"><a href="#Gin框架如何工作？" class="headerlink" title="Gin框架如何工作？"></a><strong>Gin框架如何工作？</strong></h3><p>首先，要初始化(New)一个engine对象，engine是这个框架的一个实例，engine包含非常多的参数，概括来说，主要分为两个部分：</p><ul><li>一个routerGroup对象，这是一个路由配置器，包含需要的中间件</li><li>一个线程池，这个线程池可以认为是封装好的初始化context，context是gin中最重要的内容，它的重要功能包括<strong>在不同的中间件之间传递参数</strong>，管理流程，保证一个请求的JSON结构合法性，渲染一个JSON回复等。</li></ul><p>engine实现了ServerHTTP方法，同时调用了http包的ListenAndServe函数。</p><p>经过这些配置，gin既能监听，又能对响应请求进行响应，且在使用的不同的中间件之间传递参数，在发生一些错误时，能够及时地恢复。每次接受一个新的HTTP请求时，都会从线程池中拿出一个空的Context，然后交给engine.handleHTTPRequest处理，完成之后再将这个池子回收。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Golang笔记(7)——并发</title>
       <link href="2021/09/30/golang-bi-ji-7-bing-fa/"/>
       <url>2021/09/30/golang-bi-ji-7-bing-fa/</url>

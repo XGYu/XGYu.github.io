@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Golang笔记(2)——数组和切片, XGYu">
+    <meta name="keywords" content="Golang笔记(8)——Gin, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Golang笔记(2)——数组和切片 | XGYu</title>
+    <title>Golang笔记(8)——Gin | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Golang笔记(2)——数组和切片</h1>
+                    <h1 class="description center-align post-title">Golang笔记(8)——Gin</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-09
+                    2021-10-14
                 </div>
                 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.2k
                 </div>
                 
 
@@ -475,99 +475,39 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="复合数据类型"><a href="#复合数据类型" class="headerlink" title="复合数据类型"></a>复合数据类型</h2><p> 数组和结构体是聚合类型；它们的值由许多元素或成员字段的值组成。数组是由同构的元素组成——每个数组元素都是完全相同的类型——结构体则是由异构的元素组成的。数组和结构体都是有固定内存大小的数据结构。相比之下，slice和map则是动态的数据结构，它们将根据需要动态增长。 </p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>一般很少会用到数组，大伙都用slice，但是想要熟练使用切片，必须要理解数组的工作原理。</p>
-<p>在Go语言中，数组的长度和元素类型共同决定了数组的类型。下面是数组的一些常用的初始化的方法：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
-a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
-<span class="token comment">//下面这个初始化方式定义了一个含100个元素的数组，最后一个元素被定义为-1，其他元素被定义为0</span>
-a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">99</span><span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h3 id="写在开头——记录一些配置问题"><a href="#写在开头——记录一些配置问题" class="headerlink" title="写在开头——记录一些配置问题"></a><strong>写在开头——记录一些配置问题</strong></h3><p>我使用的开发环境是基于windows 10虚拟机下的wsl2下的Ubuntu，如果在虚拟机下运行web服务器，那么在主机上是不能使用localhost(127.0.0.0.1)进行访问的，因为虚拟机和本地主机是通过桥接实现的，而且在每次重新启动机器时，它的地址就会换一个，所以在每次使用web服务时，都需要首先找到这个ip地址，方法就是在wsl环境下键入如下命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">ip addr show eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>基于Go语言处理数组的僵化，所以很少将数组作为函数的参数进行传递，所以会使用slice来代替数组。</p>
-<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p>其实完全可以将Slice看成是一种变长数组，Slice的底层也确实引用到了数组对象。 一个slice由三个部分构成：<strong>指针、长度和容量</strong>。 </p>
-<p>用<code>[]T</code>来表示一个slice类型，和数组的区别就是中括号内不需要强调序列长度，因为切片的长度是可变的，它会隐式创建一个合适长度的数组，slice的指针指向底层数组。</p>
-<p>下面讲到了一个例子，就是对<code>[]int</code>型的切片进行翻转，切片翻转可以解决若干问题，后面将会看到切片翻转的一个简单应用。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">reverse</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">for</span> i<span class="token punctuation">,</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> j<span class="token punctuation">;</span> i<span class="token punctuation">,</span> j <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> j<span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">{</span>
-        s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这里面就可以找到桥接信息，里面有主机访问虚拟机的ip地址。</p>
+<h3 id="从头开始"><a href="#从头开始" class="headerlink" title="从头开始"></a><strong>从头开始</strong></h3><p>首先创建一个gin的项目，需要打开Go Module并且设置好代理，否则在拉取github的依赖会失败，在中国比较好的代理是七牛云。</p>
+<p>然后需要键入<code>go mod init XXX</code>命令生成go.mod文件，默认包含模块路径和与其Go版本语言，后面会不断夹杂Go Module的知识。</p>
+<p>在主目录需要执行<code>go get -u github.com/gin-gonic/gin</code> 生成一个go.sum文件，文件详细罗列了当前项目直接或间接依赖的所有模块版本，并写明了那些模块版本的 SHA-256 哈希值以确保 Go 在今后的操作中保证项目所依赖的那些模块版本不会被篡改。</p>
+<p>当下载了Gin的依赖包后，go.mod文件也随之改变，增加了require等部分，用于控制模块版本，如果后面加上了indirect的注释，这代表它是传递依赖而并非直接依赖。</p>
+<p>整体上就跟着煎鱼的教程跟着做就可以了，如果遇到一些值得记录的问题我会及时的整理在博客上。</p>
+<p>补充项目结构：</p>
+<pre class="line-numbers language-none"><code class="language-none">gin_framework/
+├── conf			//存储配置文件
+├── middleware		//应用中间件
+├── models			//应用数据库模型
+├── pkg				//第三方包
+├── routers			//路由逻辑处理
+└── runtime			//应用运行时数据<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这个方法的经典应用是将slice循环向左/向右循环n位。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//旋转除了使用考研时非常经典的前n个元素翻转、后面剩余元素翻转，然后整体进行一个旋转</span>
-<span class="token comment">//下面的例子是将slice向左旋转两个单位</span>
-s <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-
-<span class="token comment">//其次，还可以使用内置的copy元素比较简单的实现旋转</span>
-<span class="token keyword">func</span> <span class="token function">rotate</span><span class="token punctuation">(</span>t <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">{</span>
-    tmp <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> t<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token operator">-</span>n<span class="token punctuation">]</span><span class="token punctuation">,</span> t<span class="token punctuation">[</span>n<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token function">copy</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span><span class="token function">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token operator">-</span>n<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tmp<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> t
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>对于两个slice之间的比较，遵循以下三条规则：</p>
+<p>那么该怎么让这个项目运行起来呢？以第一版本为例，要先配置ini文件，里面包含了服务器、数据库的信息，然后需要编写全局性的代码，比如一些全局使用的参数、状态码和启动代码，比如要将服务器启动，要连接数据库，加载应用等等工作。为我们要写的项目设计模型，这个模型层下与数据库的属性相对应，上供实例创建与调用。然后编写路由(router)，在路由下编写需要直接操纵数据库的底层方法，然后编写实现路由的方法，这些方法不直接操纵数据库，但是会使用编写好的底层方法。注意根据对应的http方法(GET、POST、PUT、DELETE)编写不同的逻辑。在这个过程中主要使用了一下的包：</p>
 <ul>
-<li>Go语言内置库仅支持两个字节型（[]byte）的slice是否相等，使用<code>bytes.Equal</code>函数</li>
-<li>合法的比较操作是和nil作比较，回想一下，什么情况下切片会和nil相等呢？</li>
-<li>对于其他的切片比较操作，只能编写函数展开元素比较</li>
+<li><strong>gin</strong>：想要理解gin，关键在于读懂它的Context，在github页面中有大量的篇幅介绍了gin.Context，有时间一定要将它读懂。</li>
+<li><strong>beego-validation</strong>：表单验证库，要对模型内的一些属性做值上的限制，而不是取任何值都能保存在数据库中。</li>
+<li><strong>gorm</strong>：使用数据库的一个ORM框架。</li>
+<li><strong>com</strong>：工具包，在处理数据时非常有用。</li>
 </ul>
-<p>不过，如果要验证一个slice是否为空，应该使用<code>len(s) == 0</code>而不是通过nil。</p>
-<p>内置的make函数创建一个指定元素类型、长度和容量的slice。容量部分可以省略，在这种情况下，容量将等于长度。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">)</span>
-<span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">,</span> <span class="token builtin">cap</span><span class="token punctuation">)</span> <span class="token comment">// same as make([]T, cap)[:len]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>还记得吗？make可以为三种数据类型分配内存，slice、map和chan，当我们为slice分配内存时，应尽量预估到可能的最大值，避免二次分配内存。</p>
-<p>向slice中添加新元素，要使用append函数，每次调用append函数，必须先检测slice底层数组是否有足够的容量来保存新添加的元素。<strong>如果有足够空间的话</strong>，直接扩展slice（依然在原有的底层数组之上），将新添加的y元素复制到新扩展的空间，并返回slice。因此，输入的x和输出的z共享相同的底层数组。<strong>如果没有足够的增长空间的话</strong>，append函数则会先分配一个足够大的slice用于保存新的结果，先将输入的x复制到新的空间，然后添加y元素，结果z和输入的x引用的将是不同的底层数组。如果开辟了新的空间，它不是简单地开辟所需要的那部分空间，而是直接翻倍以避免即将到来的多次内存分配。</p>
-<p>使用slice可以完成若干功能，如模拟栈等，这里可以等待后续学习更多的知识进行补充。</p>
-<p>遇到的一个练习题：</p>
-<blockquote>
-<p> <strong>练习 4.5：</strong> 写一个函数在原地完成消除[]string中相邻重复的字符串的操作。 </p>
-</blockquote>
-<p>找到了一个特别精巧的解法，一定要好好学习一下这种思路，对于解决字符串相关问题都有帮助：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//首先是原地操作，其次是continue的使用，对于大于两个相同的字符串也同样适用</span>
-<span class="token keyword">func</span> <span class="token function">unique</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">{</span>
-    k <span class="token operator">:=</span> <span class="token number">0</span>
-    <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> s <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> s<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">==</span> v <span class="token punctuation">{</span>
-            <span class="token keyword">continue</span>
-        <span class="token punctuation">}</span>
-        k <span class="token operator">++</span>
-        s<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>下面这道习题涉及到了UTF-8编码与Go语言中的byte的关系问题，以及编码方式的转换：</p>
-<blockquote>
-<p> <strong>练习 4.6：</strong> 编写一个函数，原地将一个UTF-8编码的[]byte类型的slice中相邻的空格（参考unicode.IsSpace）替换成一个空格返回 。</p>
-</blockquote>
-<p>这道题目我查阅了相关资料，结合题目，找到了编码转换的一些技巧。首先看这是一类什么样的切片：是UTF-8编码的[]byte类型的切片，但是这里面不可以直接去遍历[]byte，因为一个byte类型（底层类型是uint8）并不是用来存储一个UTF-8码字的！在Go语言中，使用rune（实际上的底层数据结构是int32）来存储UTF-8的字符，所以需要进行转换。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">byteDelReSpace</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span> <span class="token punctuation">{</span>
-	<span class="token keyword">var</span> i <span class="token builtin">int</span>
-	<span class="token keyword">for</span> l <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> l <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">{</span>
-		r<span class="token punctuation">,</span> size <span class="token operator">:=</span> utf8<span class="token punctuation">.</span><span class="token function">DecodeRune</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-		l <span class="token operator">+=</span> size
-		<span class="token keyword">if</span> unicode<span class="token punctuation">.</span><span class="token function">IsSpace</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">if</span> i <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> b<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token function">byte</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token punctuation">[</span>i<span class="token operator">+</span>size<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-				b<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">byte</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span>
-				<span class="token function">copy</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token punctuation">[</span>i<span class="token operator">+</span>size<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-				i <span class="token operator">++</span>
-			<span class="token punctuation">}</span>
-		<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-			i <span class="token operator">+=</span> size
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a><strong>JWT</strong></h3><p>JWT的全称是Json Web Token，说白了它就是一个token，再多加点字就是，JWT就是一个生成token的规范，用于身份认证(授权)，或者进行信息交换，用于作为JSON对象在各方之间安全地传输信息。</p>
+<h3 id="Gin框架如何工作？"><a href="#Gin框架如何工作？" class="headerlink" title="Gin框架如何工作？"></a><strong>Gin框架如何工作？</strong></h3><p>首先，要初始化(New)一个engine对象，engine是这个框架的一个实例，engine包含非常多的参数，概括来说，主要分为两个部分：</p>
+<ul>
+<li>一个routerGroup对象，这是一个路由配置器，包含需要的中间件</li>
+<li>一个线程池，这个线程池可以认为是封装好的初始化context，context是gin中最重要的内容，它的重要功能包括<strong>在不同的中间件之间传递参数</strong>，管理流程，保证一个请求的JSON结构合法性，渲染一个JSON回复等。</li>
+</ul>
+<p>engine实现了ServerHTTP方法，同时调用了http包的ListenAndServe函数。</p>
+<p>经过这些配置，gin既能监听，又能对响应请求进行响应，且在使用的不同的中间件之间传递参数，在发生一些错误时，能够及时地恢复。每次接受一个新的HTTP请求时，都会从线程池中拿出一个空的Context，然后交给engine.handleHTTPRequest处理，完成之后再将这个池子回收。</p>
 
                 
             </div>
@@ -594,7 +534,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/09/09/golang-bi-ji-2-shu-zu-he-slice/">https://xgyu.github.io/2021/09/09/golang-bi-ji-2-shu-zu-he-slice/</a>
+                    <a href="https://xgyu.github.io/2021/10/14/golang-bi-ji-8-gin/">https://xgyu.github.io/2021/10/14/golang-bi-ji-8-gin/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -805,13 +745,13 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/12/golang-bi-ji-3-map/">
+                <a href="/2021/11/03/golang-bi-ji-9-grpc/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Golang笔记(3)——Map">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Golang笔记(9)--gRPC">
                         
-                        <span class="card-title">Golang笔记(3)——Map</span>
+                        <span class="card-title">Golang笔记(9)--gRPC</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -822,7 +762,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
                         </span>
                         <span class="publish-author">
                             
@@ -842,13 +782,13 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/07/golang-bi-ji-1-zi-fu-chuan/">
+                <a href="/2021/09/30/golang-bi-ji-7-bing-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(1)——字符串">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang笔记(7)——并发">
                         
-                        <span class="card-title">Golang笔记(1)——字符串</span>
+                        <span class="card-title">Golang笔记(7)——并发</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -859,7 +799,7 @@ s <span class="token operator">:=</span> <span class="token punctuation">[</span
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-30
                             </span>
                         <span class="publish-author">
                             
