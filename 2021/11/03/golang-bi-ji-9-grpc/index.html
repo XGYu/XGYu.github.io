@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="XGYu" type="application/atom+xml">
 </head>
 
 
@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    716
                 </div>
                 
 
@@ -475,7 +475,45 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h3 id="啥是RPC？"><a href="#啥是RPC？" class="headerlink" title="啥是RPC？"></a><strong>啥是RPC？</strong></h3><p>RPC指远程过程调用，允许运行于一台计算机的程序调用另一台计算机的子程序，而开发人员无需额外地为这个交互作用编程。</p>
+<p>gRPC是RPC的一个常用框架，它是基于HTTP/2协议设计的，使用Protobuf作为IDL(交互式数据语言)。</p>
+<p>Protocol Buffers 是一种与语言、平台无关，可扩展的序列化结构化数据的方法，常用于通信协议，数据存储等等。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>JSON</th>
+<th>XML</th>
+<th><strong>Protobuf</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用场景</td>
+<td>Web项目</td>
+<td>WebService</td>
+<td>高性能、响应速度高</td>
+</tr>
+<tr>
+<td>格式</td>
+<td>键值对</td>
+<td>闭合标签</td>
+<td>二进制数据</td>
+</tr>
+</tbody></table>
+<p>可以分为四种请求响应类型的RPC：</p>
+<ul>
+<li><p><strong>简单模式(Simple RPC)<strong>：客户端发起一个请求，服务器响应一个数据，典型事例：HTTP请求。它的</strong>缺点是数据包过大时瞬时压力太大，二是没有办法做到边发送边处理。</strong></p>
+</li>
+<li><p>**服务端数据流模式(Server-side streaming RPC)**：客户端发起一次请求，服务端返回一段数据流。典型的例子是客户端向服务端发送一个股票代码，服务端就把该股票的实时数据源源不断的返回给客户端。 </p>
+</li>
+<li><p>**客户端数据流模式(Client-side streaming RPC)**：与服务端数据流模式相反，这次是客户端源源不断的向服务端发送数据流，而在发送结束后，由服务端返回一个响应。典型的例子是物联网终端向服务器报送数据。</p>
+</li>
+<li><p>**双向数据流模式(Bidirectional streaming RPC)**：这是客户端和服务端都可以向对方发送数据流，这个时候双方的数据可以同时互相发送，也就是可以实现实时交互。典型的例子是聊天机器人。</p>
+</li>
+</ul>
+<p><strong>流式RPC适合在数据包较大的实时场景应用。</strong></p>
+<p>gRPC的明文传输带来的问题是容易被第三方窃取或篡改，所以需要生成公钥和私钥对数据进行加密和解密。<strong>使用私钥加密的密文只有用公钥才能打开，而使用公钥加密的密文只有用私钥才能打开</strong>，由于我们绝对不会将私钥暴露在网络上，所以可以保证经过公钥加密的数据不会被第三方破解。这里直接看基于CA的TLS证书认证，也就是说，公钥，即证书，如果从Server发给Client会造成什么问题？问题就是如果有第三方截取这个公钥，发给Client一个假的证书，但Client完全不知情，会信任这个证书，这就达不到保护的目的了。所以我们需要一个中立的机构，即根证书颁发机构来为Server和Client对等地颁发证书。</p>
+
                 
             </div>
             <hr/>
@@ -708,18 +746,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/03/golang-bi-ji-9-grpc/">
+                <a href="/2021/11/13/https-yuan-li-fen-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Golang笔记(9)--gRPC">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Https原理分析">
                         
-                        <span class="card-title">Golang笔记(9)--gRPC</span>
+                        <span class="card-title">Https原理分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -729,9 +766,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -740,7 +777,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -925,7 +961,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">13.4k</span>
+                        class="white-color">15.3k</span>
             
             
             

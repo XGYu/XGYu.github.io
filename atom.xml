@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-11-03T12:24:40.686Z</updated>
+  <updated>2021-11-14T10:49:51.829Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -17,12 +17,42 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Https原理分析</title>
+    <link href="https://xgyu.github.io/2021/11/13/https-yuan-li-fen-xi/"/>
+    <id>https://xgyu.github.io/2021/11/13/https-yuan-li-fen-xi/</id>
+    <published>2021-11-13T14:40:30.000Z</published>
+    <updated>2021-11-14T10:49:51.829Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;昨天挖了个坑，在学习gRPC的认证时，又提到了https的连接过程，所以现在整理成笔记，方便以后查阅。&lt;/p&gt;
+&lt;h3 id=&quot;为什么需要HTTPS？&quot;&gt;&lt;a href=&quot;#为什么需要HTTPS？&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>Golang笔记(9)--gRPC</title>
     <link href="https://xgyu.github.io/2021/11/03/golang-bi-ji-9-grpc/"/>
     <id>https://xgyu.github.io/2021/11/03/golang-bi-ji-9-grpc/</id>
     <published>2021-11-03T12:24:40.000Z</published>
-    <updated>2021-11-03T12:24:40.686Z</updated>
+    <updated>2021-11-08T08:38:59.307Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;啥是RPC？&quot;&gt;&lt;a href=&quot;#啥是RPC？&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
