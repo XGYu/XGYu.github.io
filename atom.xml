@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-11-14T10:49:51.829Z</updated>
+  <updated>2021-12-18T03:04:48.915Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>嵌入式第四次实验报告</title>
+    <link href="https://xgyu.github.io/2021/12/18/qian-ru-shi-di-si-ci-shi-yan-bao-gao/"/>
+    <id>https://xgyu.github.io/2021/12/18/qian-ru-shi-di-si-ci-shi-yan-bao-gao/</id>
+    <published>2021-12-18T03:04:48.000Z</published>
+    <updated>2021-12-18T03:04:48.915Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Https原理分析</title>
