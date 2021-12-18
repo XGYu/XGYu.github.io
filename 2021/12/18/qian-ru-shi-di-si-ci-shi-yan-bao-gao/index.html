@@ -455,7 +455,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    832
                 </div>
                 
 
@@ -475,7 +475,72 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="软定时器机制及GPIO实验"><a href="#软定时器机制及GPIO实验" class="headerlink" title="软定时器机制及GPIO实验"></a>软定时器机制及GPIO实验</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>本次实验的目的是开发一个实时操作系统的软定时器，具体要求如下：</p>
+<ul>
+<li>实现两种常见的定时类型：单次定时和周期定时；</li>
+<li>实现软定时器的结构体设计和初始化；</li>
+<li>实现定时器启动、消息激励的超时激励、停止和资源释放；</li>
+<li>实现多任务下的GPIO测试。</li>
+</ul>
+<p>对于本次的软定时器设计，主要依托的就是VxWorks提供的硬件时钟中断机制，根据需要的定时器时长，申请对应的硬件时钟滴答资源。单词定时和周期定时的区别在于，周期定时在定时器到时后，会重置定时器的剩余时长。下面主要介绍定时器结构体的设计和API设计。</p>
+<h3 id="软定时器设计"><a href="#软定时器设计" class="headerlink" title="软定时器设计"></a>软定时器设计</h3><p>对于软定时器模型的设计，主要编写了两个结构体，一个是定时器实例，另一个是定时器队列。这是因为在VxWorks中会运行多个进程，所以系统需要维护这些进程可能会使用的软定时器，这里就是用链表这种数据结构来维护，如果有新的定时器加入，则直接将其附在表头。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">SoftTimerNode</span> <span class="token punctuation">{</span>
+  <span class="token keyword">struct</span> <span class="token class-name">SoftTimerNode</span><span class="token operator">*</span> priv<span class="token punctuation">;</span>  	<span class="token comment">// 前驱指针</span>
+  <span class="token keyword">struct</span> <span class="token class-name">SoftTimerNode</span><span class="token operator">*</span> next<span class="token punctuation">;</span>  	<span class="token comment">// 后继指针</span>
+  <span class="token class-name">uint32_t</span> timerID<span class="token punctuation">;</span>         <span class="token comment">// 定时任务ID</span>
+  <span class="token class-name">uint32_t</span> tickTarget<span class="token punctuation">;</span>      <span class="token comment">// 总时钟周期数</span>
+  <span class="token class-name">uint32_t</span> tickRemain<span class="token punctuation">;</span>      <span class="token comment">// 剩余时钟周期数</span>
+  MSG_Q_ID msgQueueID<span class="token punctuation">;</span>      <span class="token comment">// 消息队列ID</span>
+  <span class="token class-name">uint8_t</span> type<span class="token punctuation">;</span>             <span class="token comment">// 定时器类型</span>
+  <span class="token class-name">uint8_t</span> isActive<span class="token punctuation">;</span>         <span class="token comment">// 定时器暂停(0)或运行(1)</span>
+<span class="token punctuation">}</span> SoftTimerNode<span class="token punctuation">;</span>
+
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">SoftTimer</span> <span class="token punctuation">{</span>
+  <span class="token class-name">uint32_t</span> sysTickPerSec<span class="token punctuation">;</span>  		<span class="token comment">// 系统每秒的时钟周期数</span>
+  SoftTimerNode<span class="token operator">*</span> timers<span class="token punctuation">;</span>      	<span class="token comment">// 定时任务双向链表</span>
+  <span class="token keyword">int</span> bgTaskID<span class="token punctuation">;</span>            	<span class="token comment">// 后台任务ID</span>
+  SEM_ID mu<span class="token punctuation">;</span>               	<span class="token comment">// 互斥锁</span>
+<span class="token punctuation">}</span> SoftTimer<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在软定时器结点的设计中，引入总时钟周期数和剩余时钟周期数，这是定时的依据，假如一个消息队列实现消息激励，计时器类型是为了区分单词定时与周期定时。由于定时器实例是一个互斥资源，所以设置互斥锁的目的是确保同一时间只能有一个进程对计时器实例的资源进行修改。</p>
+<p>下面是设计的定时器API，涉及到定时器初始化、运行、设置任务和撤销定时器。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//初始化软定时器</span>
+<span class="token keyword">int</span> <span class="token function">SoftTimerInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/***
+* 设置定时任务
+* @MSG_Q_ID mqID       消息队列
+* @float n             计时长度
+* @uint8_t unitType    采用的计时单位，时钟滴答tick或者现实中的秒
+* @uint8_t timerType   计时器类型，单次或周期
+* @return              计时任务ID
+***/</span>
+<span class="token class-name">uint32_t</span> <span class="token function">SetTimerTask</span><span class="token punctuation">(</span>MSG_Q_ID mqID<span class="token punctuation">,</span> <span class="token keyword">float</span> n<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> unitType<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> timerType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/***
+* 删除定时器任务
+* @uint32_t timerID    计时器任务ID
+***/</span>
+<span class="token keyword">void</span> <span class="token function">ClearTimerTask</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> timerID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/***
+* 设置定时任务开始运行
+* @uint32_t timerID 计时任务ID
+***/</span>
+<span class="token keyword">void</span> <span class="token function">StartTimerTask</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> timerID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/***
+* 停止定时任务运行
+* @uint32_t timerID 计时任务ID
+***/</span>
+<span class="token keyword">void</span> <span class="token function">StopTimerTask</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> timerID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//销毁软定时器</span>
+<span class="token keyword">void</span> <span class="token function">SoftTimerKill</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="实验测试"><a href="#实验测试" class="headerlink" title="实验测试"></a>实验测试</h3><p>实验的主要测试方法为设置一个整形全局变量，由两个任务分别对这个变量执行累加操作，各自的任务都由定时器控制，采取周期定时器机制。定时器时长设置为每秒触发一次，所以可以看到两个任务交替执行，具体的过程可参见视频。</p>
+
                 
             </div>
             <hr/>
@@ -925,7 +990,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">15.3k</span>
+                        class="white-color">16.1k</span>
             
             
             
