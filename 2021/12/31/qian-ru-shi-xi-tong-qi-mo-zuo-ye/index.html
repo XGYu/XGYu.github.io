@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="前端学习路线(2)-CSS初级, XGYu">
+    <meta name="keywords" content="嵌入式系统期末作业, XGYu">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>前端学习路线(2)-CSS初级 | XGYu</title>
+    <title>嵌入式系统期末作业 | XGYu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -313,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">前端学习路线(2)-CSS初级</h1>
+                    <h1 class="description center-align post-title">嵌入式系统期末作业</h1>
                 </div>
             </div>
         </div>
@@ -446,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-30
+                    2021-12-31
                 </div>
                 
 
@@ -475,141 +475,238 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是CSS"><a href="#什么是CSS" class="headerlink" title="什么是CSS"></a>什么是CSS</h3><p>CSS是一种描述HTML文档样式的语言，简而言之，就是说应该如何显示HTML元素，控制一张网页的布局。</p>
-<p>假如有一个HTML文件，通过样式表的不同表达方式，它最终展现在页面上的样式不同。</p>
-<p>好像我日常写简单的HTML页面，也没感觉到CSS有什么用，但是一旦构造大型的网站，需要对网站内的每个页面都保持相似的风格，那么对标题、对段落、对表格、对图片等等的表现方式都要去一个一个去设置相同的字体、字号、背景、表格方式等等内容，那这个工作量太大了，所以出现了CSS，它可以<strong>宏观</strong>的规定标题要以什么方式呈现，段落里的文字要用多大的字号等，那这样HTML单负责记录文本内容就够了。</p>
-<h3 id="CSS语法"><a href="#CSS语法" class="headerlink" title="CSS语法"></a>CSS语法</h3><p>CSS语法由<strong>选择器</strong>和<strong>声明块</strong>组成，比如我可以按如下方式规定段落的格式：</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">p</span> <span class="token punctuation">{</span>
-  <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
-  <span class="token property">font-size</span><span class="token punctuation">:</span> 14px<span class="token punctuation">;</span>
-  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="模拟TCP协议的实现及测试验证"><a href="#模拟TCP协议的实现及测试验证" class="headerlink" title="模拟TCP协议的实现及测试验证"></a>模拟TCP协议的实现及测试验证</h2><p>2021140620    于兴国</p>
+<h3 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h3><p>在充分理解嵌入式处理器特点、RTOS及强实时嵌入式系统软件设计原则的基础上，构建自己的实时软件框架，并在其上模拟实现TCP协议，自拟测试所完成的相关功能。</p>
+<h3 id="实验环境及内容"><a href="#实验环境及内容" class="headerlink" title="实验环境及内容"></a>实验环境及内容</h3><p>环境：VxWorks+2440板(ARM920T)</p>
+<p>内容：</p>
+<ul>
+<li>能有效降低外部碎片积累问题的存储器优化管理机制；</li>
+<li>统一消息格式驱动的实时软件机制；</li>
+<li>软定时器支持机制；</li>
+<li>2440板LED功能（自拟）控制功能。</li>
+</ul>
+<h3 id="模型设计"><a href="#模型设计" class="headerlink" title="模型设计"></a>模型设计</h3><p>TCP连接协议是互联网非常重要的传输层协议，可以说TCP支撑起了整个面向连接的网络框架，虽然之前已经系统学习过TCP协议的整个连接过程，但是对于设计实现，还需要掌握协议的更多的细节。</p>
+<p>首先TCP协议在连接、传输、断连的过程涉及到非常多的状态转换，对应的每一个状态，都有相应的触发条件和计时措施，同时还需要对数据帧进行封装和解封装，在应用层使用该协议，因此形成了本次实验所需要实现和使用的基本工具：</p>
+<ul>
+<li>内存管理机制：因为涉及到数据帧的传输，在本实验中使用多任务环境模拟客户端和服务器之间的TCP连接，所以涉及到消息队列及内存的知识。</li>
+<li>软定时器机制：在状态转换过程中，需要对不同的状态进行相应的计时，以便于确保协议在规定的时间内完成相应事件的触发和状态的转换。例如在“四次挥手”的过程中，在TIME_WAIT状态下，要进行2MSL的时长等待，类似这样的定时控制其实在整个协议的实现，还要用到若干，并且这里的2MSL在多任务模拟的情况下也缺乏理论数据，所以需要人为设置一个合适的值。</li>
+<li>有限状态自动机：在某个状态下，得到相应的输入转换到下一个状态，这是一种非常常用的程序设计思想，在嵌入式所依托的C语言环境下，使用switch-case语句实现自动机模型。</li>
+<li>应用层设计：当两个结点通过TCP连接后，上层应该根据TCP协议的特点进行通信，比如面向连接的网络特点就是实时性强、可靠性高。</li>
+</ul>
+<p>下图是TCP连接的有限状态机：</p>
+<img src="C:\Users\16435\Desktop\20150817181939012.jpg" alt="20150817181939012" style="zoom: 80%;">
 
-<p><code>p</code>代表选择器，代表它指向HTML中的 <code>&lt;p&gt;</code>，下面就是对这个标签的文本规定：红色、12号字、文本居中。</p>
-<h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><p>CSS可以对HTML中的元素、id、类、通用元素进行选择，符合相应的条件的内容都会遵循声明块中的样式，具体的表达方法如下表所示：</p>
+<p>下图是TCP连接的流程图：</p>
+<img src="C:\Users\16435\Desktop\TCP.jpg" style="zoom:80%;">
+
+<p>实验任务就是根据上述的状态机和流程图，设计数据结构、常量、变量、和相应的函数。</p>
+<h3 id="数据结构及函数设计"><a href="#数据结构及函数设计" class="headerlink" title="数据结构及函数设计"></a>数据结构及函数设计</h3><p>首先对于有限状态机中的11个状态赋予了相应的常量：</p>
 <table>
 <thead>
 <tr>
-<th>选择器</th>
-<th>例子</th>
-<th>描述</th>
+<th>状态</th>
+<th>值</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>.class</td>
-<td>.intro</td>
-<td>选取所有class=”intro”的元素</td>
+<td>STATUS_CLOSED</td>
+<td>0x00</td>
 </tr>
 <tr>
-<td>#id</td>
-<td>#firstname</td>
-<td>选取id=”firstname”的那<strong>一个</strong>元素(因为id是唯一的)</td>
+<td>STATUS_LISTEN</td>
+<td>0x01</td>
 </tr>
 <tr>
-<td>*</td>
-<td>*</td>
-<td>选取所有元素</td>
+<td>STATUS_SYN_SENT</td>
+<td>0x02</td>
 </tr>
 <tr>
-<td>element</td>
-<td>p</td>
-<td>选取所有 <code>&lt;p&gt;</code>元素</td>
+<td>STATUS_SYN_RECEIVED</td>
+<td>0x03</td>
 </tr>
 <tr>
-<td>element,element,…</td>
-<td>div, p</td>
-<td>选取所有 <code>&lt;div&gt;</code>和 <code>&lt;p&gt;</code>元素</td>
+<td>STATUS_ESTABLISHED</td>
+<td>0x04</td>
+</tr>
+<tr>
+<td>STATUS_FIN_WAIT_1</td>
+<td>0x05</td>
+</tr>
+<tr>
+<td>STATUS_FIN_WAIT_2</td>
+<td>0x06</td>
+</tr>
+<tr>
+<td>STATUS_CLOSE_WAIT</td>
+<td>0x07</td>
+</tr>
+<tr>
+<td>STATUS_CLOSING</td>
+<td>0x08</td>
+</tr>
+<tr>
+<td>STATUS_LAST_ACK</td>
+<td>0x09</td>
+</tr>
+<tr>
+<td>STATUS_TIME_WAIT</td>
+<td>0x10</td>
 </tr>
 </tbody></table>
-<h3 id="添加CSS"><a href="#添加CSS" class="headerlink" title="添加CSS"></a>添加CSS</h3><p>有三种插入样式表的方法：</p>
-<ul>
-<li><p>外部CSS</p>
-<p>为样式表单独写一个 <code>.css</code> 文件，在HTML页面的 <code>head</code>部分的 <code>&lt;link&gt;</code>元素内包含对外部样式表文件的引用，例如以下代码：</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>mystyle.css<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+<p>对于相应的时间，依托上次实现的软定时器设置如下：</p>
+<table>
+<thead>
+<tr>
+<th>时间常量</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SYS_CLOCK_RATE</td>
+<td>sysClkRateGet()</td>
+</tr>
+<tr>
+<td>TMOUT_W_RESP</td>
+<td>SYS_CLOCK_RATE * 1</td>
+</tr>
+<tr>
+<td>TMOUT_CON_REQ</td>
+<td>SYS_CLOCK_RATE * 3</td>
+</tr>
+<tr>
+<td>TMOUT_W_ACK</td>
+<td>SYS_CLOCK_RATE * 3</td>
+</tr>
+<tr>
+<td>TMOUT_DELAY</td>
+<td>SYS_CLOCK_RATE * 2</td>
+</tr>
+</tbody></table>
+<p>对于TCP协议控制连接、传输、断开连接过程中的帧类型，设置如下：</p>
+<table>
+<thead>
+<tr>
+<th>帧格式</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TCP_SYN</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>TCP_ACK</td>
+<td>0x06</td>
+</tr>
+<tr>
+<td>TCP_SYN_ACK</td>
+<td>0x08</td>
+</tr>
+<tr>
+<td>TCP_PSH</td>
+<td>0x04</td>
+</tr>
+<tr>
+<td>TCP_FIN</td>
+<td>0x15</td>
+</tr>
+<tr>
+<td>TCP_FIN_ACK</td>
+<td>0x16</td>
+</tr>
+<tr>
+<td>TCP_RST</td>
+<td>0x18</td>
+</tr>
+</tbody></table>
+<p>对于应用层设计了如下常量：</p>
+<table>
+<thead>
+<tr>
+<th>应用层帧格式</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CMD_START</td>
+<td>0x00</td>
+</tr>
+<tr>
+<td>CMD_CON_IND</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>CMD_CON_RESP</td>
+<td>0x02</td>
+</tr>
+<tr>
+<td>CMD_CON_REQ</td>
+<td>0x03</td>
+</tr>
+<tr>
+<td>CMD_CON_CONF</td>
+<td>0x04</td>
+</tr>
+<tr>
+<td>CMD_DIS_IND</td>
+<td>0x05</td>
+</tr>
+<tr>
+<td>CMD_DIS_RESP</td>
+<td>0x06</td>
+</tr>
+<tr>
+<td>CMD_DIS_REQ</td>
+<td>0x07</td>
+</tr>
+<tr>
+<td>CMD_COMP</td>
+<td>0x08</td>
+</tr>
+</tbody></table>
+<p>设计了如下的结构体：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 消息结构定义 */</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">MESSAGE</span>	 <span class="token comment">/* 通用消息类型定义 */</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">uint8_t</span> type<span class="token punctuation">;</span>	    <span class="token comment">/* 消息类型 */</span>
+    <span class="token class-name">uint8_t</span> reserved0<span class="token punctuation">;</span>
+    <span class="token class-name">uint16_t</span> reserved1<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> reserved2<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> reserved3<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> reserved4<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> MESSAGE<span class="token punctuation">;</span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>This is a heading<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>This is a paragraph.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">CMDMSG</span>	<span class="token comment">/* 应用层控制命令定义 */</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">uint8_t</span> type<span class="token punctuation">;</span>       <span class="token comment">/* 消息类型 */</span>
+    <span class="token class-name">uint8_t</span> command<span class="token punctuation">;</span> 	<span class="token comment">/* 操作命令 */</span>
+    <span class="token class-name">uint16_t</span> reserved0<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> dstBox<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> length<span class="token punctuation">;</span> 	<span class="token comment">/* 文件长度 */</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>file<span class="token punctuation">;</span>      	<span class="token comment">/* 文件指针 */</span>
+<span class="token punctuation">}</span> CMDMSG<span class="token punctuation">;</span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">TCPFRAME</span>  <span class="token comment">/* 协议帧消息定义 */</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">uint8_t</span> type<span class="token punctuation">;</span> 		<span class="token comment">/* 消息类型 */</span>
+    <span class="token class-name">uint8_t</span> header<span class="token punctuation">;</span> 	<span class="token comment">/* 协议帧头 */</span>
+    <span class="token class-name">uint8_t</span> num<span class="token punctuation">;</span>    	<span class="token comment">/* 帧序号 */</span>
+    <span class="token class-name">uint8_t</span> length<span class="token punctuation">;</span> 	<span class="token comment">/* data长度 */</span>
+    <span class="token class-name">uint32_t</span> srcBox<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span> dstBox<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>data<span class="token punctuation">;</span>       	<span class="token comment">/* 帧数据指针 */</span>
+<span class="token punctuation">}</span> TCPFRAME<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>对应的样式表 <code>mystyle.css</code> 的代码如下：</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">body</span> <span class="token punctuation">{</span>
-  <span class="token property">background-color</span><span class="token punctuation">:</span> lightblue<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<p>设计了如下函数原型：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 函数声明 */</span>
+<span class="token keyword">void</span> <span class="token function">tcp_c_s</span><span class="token punctuation">(</span>MSG_Q_ID tcpMBox<span class="token punctuation">,</span> MSG_Q_ID appMBox<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* TCP状态函数 */</span>
+<span class="token keyword">void</span> <span class="token function">applevel</span><span class="token punctuation">(</span>MSG_Q_ID tcpMBox<span class="token punctuation">,</span> MSG_Q_ID appMBox<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* 应用层函数 */</span>
+<span class="token keyword">void</span> <span class="token function">Init_all</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  	<span class="token comment">/* 初始化函数 */</span>
+<span class="token keyword">void</span> <span class="token function">test_start</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* 应用层测试函数 */</span>
+<span class="token keyword">void</span> <span class="token function">test_end</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  	<span class="token comment">/* 结束测试函数 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token selector">h1</span> <span class="token punctuation">{</span>
-  <span class="token property">color</span><span class="token punctuation">:</span> navy<span class="token punctuation">;</span>
-  <span class="token property">margin-left</span><span class="token punctuation">:</span> 20px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>内部CSS</p>
-<p>如果要在某个单一的HTML规定相应的样式，在 <code>&lt;head&gt;</code>部分内 <code>&lt;style&gt;</code>中进行定义：</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style"><span class="token language-css">
-<span class="token selector">body</span> <span class="token punctuation">{</span>
-  <span class="token property">background-color</span><span class="token punctuation">:</span> linen<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token selector">h1</span> <span class="token punctuation">{</span>
-  <span class="token property">color</span><span class="token punctuation">:</span> maroon<span class="token punctuation">;</span>
-  <span class="token property">margin-left</span><span class="token punctuation">:</span> 40px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span> 
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>This is a heading<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>This is a paragraph.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>行内CSS</p>
-<p>又称内联样式，可以为某个元素设置唯一的样式，这就需要将 <code>&lt;style&gt;</code> 属性中进行相应的定义：</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span> <span class="token style-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token style language-css"><span class="token property">color</span><span class="token punctuation">:</span>blue<span class="token punctuation">;</span><span class="token property">text-align</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">&gt;</span></span>This is a heading<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token style-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token style language-css"><span class="token property">color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">&gt;</span></span>This is a paragraph.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<p>总而言之，按照如下的优先级覆盖样式：</p>
-<p>1.行内样式(HTML)</p>
-<p>2.外部和内部样式表(在head部分)</p>
-<p>3.浏览器默认样式</p>
-<h3 id="CSS背景"><a href="#CSS背景" class="headerlink" title="CSS背景"></a>CSS背景</h3><p>可以为HTML设置背景，并通过样式表规定这些背景的表现形式，常用的属性如下所示：</p>
-<ul>
-<li><code>background-color</code>：如#ffffff</li>
-<li><code>background-image</code>：表示背景图片的url地址</li>
-<li><code>background-repeat</code>：由于页面很大，背景图片不能覆盖整个页面，通过此项查看是否横向或纵向重复背景</li>
-<li><code>background-attachment</code>：可以指定图像是否随着页面滚动而跟随移动</li>
-<li><code>background-position</code>：背景在页面的开始位置</li>
-</ul>
-<h3 id="CSS边框"><a href="#CSS边框" class="headerlink" title="CSS边框"></a>CSS边框</h3><p>CSS使用<code>border</code>属性为指定元素设置边框的样式、宽度和颜色。</p>
-<ul>
-<li><strong>样式</strong>：使用<code>border-style</code>可以将边框设置为点、实现、混合等多种形式，具体风格可以查看教程对应部分</li>
-<li><strong>宽度</strong>：使用<code>border-width</code>属性指定上右下左四个位置的宽度，可以统一设置宽度，也可以分别设置，提一嘴，上面的混合样式也是按照上右下左的顺序设置的</li>
-<li><strong>颜色</strong>：<code>border-color</code>这个就不多提了</li>
-</ul>
-<h3 id="CSS内外边距合并"><a href="#CSS内外边距合并" class="headerlink" title="CSS内外边距合并"></a>CSS内外边距合并</h3><p>分别用<code>margin</code>和<code>padding</code>设置内外边距。注意，外边距可以为负值，而内边距只能为正值，合理设置外边距，可以使排版更合理，达到非常好的效果。</p>
-<h3 id="CSS外边距合并"><a href="#CSS外边距合并" class="headerlink" title="CSS外边距合并"></a>CSS外边距合并</h3><p>当两个垂直的外边距相遇时，它们会合并成一个新的外边距，新的外边距取两者中的较大值。</p>
-<p><img src="https://www.w3school.com.cn/i/css/margin_collapsing_1.gif" alt="CSS 外边距合并实例 1"></p>
-<p>这种设计逻辑是合理的，因为文本之间的间距采用这种就是一倍行距，否则就变成了两倍行距。</p>
-<h3 id="CSS高度和宽度"><a href="#CSS高度和宽度" class="headerlink" title="CSS高度和宽度"></a>CSS高度和宽度</h3><p>分别使用<code>height</code>和<code>width</code>设置元素的宽度和高度，注意，这里的宽度和高度不包括内边距、边框和外边距奥，而不仅仅是文本的宽度和高度。</p>
-<h3 id="CSS框模型"><a href="#CSS框模型" class="headerlink" title="CSS框模型"></a>CSS框模型</h3><p>学习完上面的内容，也就引申出了看前端源码时非常常见的框模型。</p>
-<p><img src="https://www.w3school.com.cn/i/css/boxmodel.gif" alt="CSS 框模型"></p>
-<p>当两个框合并在一起的时候，只会表现出一个外边距，这称之为塌陷，这里呈现的外边距取最大值。</p>
-<h3 id="CSS轮廓"><a href="#CSS轮廓" class="headerlink" title="CSS轮廓"></a>CSS轮廓</h3><p>轮廓是设置在边框之外的线，用以凸显元素</p>
-<h3 id="其他初级教程"><a href="#其他初级教程" class="headerlink" title="其他初级教程"></a>其他初级教程</h3><p>涉及到了字体、图标、链接、图表等内容，这些等需要用的时候再去学就可以了。</p>
+<h3 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h3><h3 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h3><p>其实TCP之所以是三次握手、四次挥手，而不是两次或四次握手、三次挥手的原因，《计算机网络》书籍中的说法也并不是很明确，为了弄清楚握手和挥手机制的内涵，我曾经搜集了很多资料，后来和身边的同学形成了相对一致的看法：TCP协议之所以是三次握手，是因为这是保证连接双方都能获得对方数据传输序列号(seq)所需要的最少次数。对于通信双方A和B，不仅需要知道对方的序列号，还需要知道对方已经收到了自己的序列号，握手握的就是这个序列号，使用四次握手会造成步骤的冗余，降低连接的速度；仅使用两次握手则不会保持双方初始序列号的一致。</p>
+<p>完成了在实时系统下的TCP协议设计实现实验后，我对TCP协议有了更加深入的了解，尤其是在连接和断开连接的每一个状态，对应每一种情况都需要考虑清除才能保证整个协议可用，所以对于这种挖掘知识细节的精神，也应该去指导其他的任何知识的学习中去。</p>
 
                 
             </div>
@@ -636,7 +733,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xgyu.github.io/2021/05/30/qian-duan-xue-xi-lu-xian-2-css-chu-ji/">https://xgyu.github.io/2021/05/30/qian-duan-xue-xi-lu-xian-2-css-chu-ji/</a>
+                    <a href="https://xgyu.github.io/2021/12/31/qian-ru-shi-xi-tong-qi-mo-zuo-ye/">https://xgyu.github.io/2021/12/31/qian-ru-shi-xi-tong-qi-mo-zuo-ye/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -843,54 +940,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/07/qian-duan-xue-xi-lu-xian-3-css-zhong-ji/">
+                <a href="/2021/12/31/qian-ru-shi-xi-tong-qi-mo-zuo-ye/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="前端学习路线(3)-CSS中级">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="嵌入式系统期末作业">
                         
-                        <span class="card-title">前端学习路线(3)-CSS中级</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            YuXingguo
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/05/29/xiao-cheng-xu-kai-fa-ru-men-1/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="小程序开发入门(1)">
-                        
-                        <span class="card-title">小程序开发入门(1)</span>
+                        <span class="card-title">嵌入式系统期末作业</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -901,7 +962,45 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-31
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            YuXingguo
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/12/24/fen-bu-shi-xi-tong-gai-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="分布式系统概述">
+                        
+                        <span class="card-title">分布式系统概述</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-24
                             </span>
                         <span class="publish-author">
                             

@@ -6,7 +6,7 @@
   <link href="https://xgyu.github.io/atom.xml" rel="self"/>
   
   <link href="https://xgyu.github.io/"/>
-  <updated>2021-12-18T05:06:12.463Z</updated>
+  <updated>2021-12-31T09:21:42.887Z</updated>
   <id>https://xgyu.github.io/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>嵌入式系统期末作业</title>
+    <link href="https://xgyu.github.io/2021/12/31/qian-ru-shi-xi-tong-qi-mo-zuo-ye/"/>
+    <id>https://xgyu.github.io/2021/12/31/qian-ru-shi-xi-tong-qi-mo-zuo-ye/</id>
+    <published>2021-12-31T09:21:22.000Z</published>
+    <updated>2021-12-31T09:21:42.887Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;模拟TCP协议的实现及测试验证&quot;&gt;&lt;a href=&quot;#模拟TCP协议的实现及测试验证&quot; class=&quot;headerlink&quot; title=&quot;模拟TCP协议的实现及测试验证&quot;&gt;&lt;/a&gt;模拟TCP协议的实现及测试验证&lt;/h2&gt;&lt;p&gt;2021140620   </summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>分布式系统概述</title>
+    <link href="https://xgyu.github.io/2021/12/24/fen-bu-shi-xi-tong-gai-shu/"/>
+    <id>https://xgyu.github.io/2021/12/24/fen-bu-shi-xi-tong-gai-shu/</id>
+    <published>2021-12-24T15:48:04.000Z</published>
+    <updated>2021-12-26T16:24:37.240Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;写在开头：值得注意的是，这是一本写在2013年的书，所以对于很多概念，现在可能会有更多更新的成果，所以阅读的主要目的还是掌握分布式系统的基本脉络。&lt;/p&gt;
+&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>嵌入式第四次实验报告</title>
